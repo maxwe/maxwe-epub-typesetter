@@ -7,8 +7,9 @@ import java.util.LinkedList;
  * Email: www.dingpengwei@foxmail.com www.dingpegnwei@gmail.com
  * Description: @TODO
  */
-public interface IPage {
+public interface IPage extends ITypesetter{
     String getTitle();
     String getIndex();
     LinkedList<ISection> getSections();
+
 }

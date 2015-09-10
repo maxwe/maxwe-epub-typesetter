@@ -1,11 +1,9 @@
 package org.maxwe.epub.typesetter.impl;
 
-import org.maxwe.epub.parser.core.IParagraph;
-import org.maxwe.epub.parser.impl.Chapter;
 import org.maxwe.epub.typesetter.constant.LayoutStyle;
 import org.maxwe.epub.typesetter.core.IChapter;
-import org.maxwe.epub.typesetter.core.IPage;
 import org.maxwe.epub.typesetter.core.ISection;
+import org.maxwe.epub.typesetter.core.ITypesetter;
 
 import java.util.LinkedList;
 
@@ -14,7 +12,7 @@ import java.util.LinkedList;
  * Email: www.dingpengwei@foxmail.com www.dingpegnwei@gmail.com
  * Description: @TODO
  */
-public class Page implements IPage {
+public class Page {
 
     private LinkedList<ISection> sections = new LinkedList<ISection>();
 
@@ -72,19 +70,7 @@ public class Page implements IPage {
         return null;
     }
 
-    public Page typeset() {
-        int paragraphOffset = this.chapterTypesetter.getParagraphOffset();
-        int sectionOffset = this.chapterTypesetter.getSectionOffset();
-        int offset = this.chapterTypesetter.getOffset();
-        Chapter chapter = this.chapterTypesetter.getChapter();
-        LinkedList<IParagraph> paragraphs = chapter.getParagraphs();
-        for (int i=paragraphOffset;i<paragraphs.size();i++){
-            IParagraph paragraph = paragraphs.get(i);
-            LinkedList<org.maxwe.epub.parser.core.ISection> sections = paragraph.getSections();
-            for (int j=sectionOffset;j<sections.size();j++){
-            }
-        }
-
+    public <E extends ITypesetter> E typeset(org.maxwe.epub.parser.core.ISection section) {
         return null;
     }
 }

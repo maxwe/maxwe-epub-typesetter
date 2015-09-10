@@ -22,5 +22,5 @@ public interface ITypesetter extends Serializable {
     <E extends ITypesetter> E setFontSize(int size);
     <E extends ITypesetter> E setLayoutStyle(LayoutStyle layoutStyle);
 
-    <E extends ITypesetter> E typeset();
+    <E extends org.maxwe.epub.parser.core.ISection> void typeset(E section);
 }

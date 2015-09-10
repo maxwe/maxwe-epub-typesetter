@@ -1,7 +1,5 @@
 package org.maxwe.epub.typesetter.core;
 
-import org.maxwe.epub.parser.impl.Chapter;
-
 import java.util.LinkedList;
 
 /**
@@ -11,9 +9,10 @@ import java.util.LinkedList;
  */
 public interface IChapter {
     String getTitle();
-    Chapter getChapter();
+    org.maxwe.epub.parser.core.IChapter getChapter();
     int getParagraphOffset();
     int getSectionOffset();
     int getOffset();
     LinkedList<IPage> getPages();
+    void typeset();
 }
