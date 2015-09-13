@@ -11,16 +11,33 @@ import java.io.Serializable;
  */
 public interface ITypesetter extends Serializable {
 
-    <E extends ITypesetter> E setStartX(int x);
-    <E extends ITypesetter> E setStartY(int y);
+    /**
+     * 设置XY轴的起始排版点坐标
+     * @param x X轴坐标
+     * @param y Y轴坐标
+     * @param <E> 子类
+     * @return 子类实例
+     */
     <E extends ITypesetter> E setStartPoint(int x,int y);
-    <E extends ITypesetter> E setTypesetterAreaWidth(int width);
-    <E extends ITypesetter> E setTypesetterAreaHeight(int height);
+
+    /**
+     * 设置可用的绘制区域的宽高
+     * @param width 可用的绘制区域的宽
+     * @param height 可用的绘制区域的高
+     * @param <E> 子类
+     * @return 子类实例
+     */
     <E extends ITypesetter> E setTypesetterArea(int width,int height);
+
+    /**
+     * XY轴实际的排版结束点
+     * @return X轴坐标 Y轴坐标
+     */
+    int[] getEndPoint();
 
     <E extends ITypesetter> E setTypeface(Object typeface);
     <E extends ITypesetter> E setFontSize(int size);
     <E extends ITypesetter> E setLayoutStyle(LayoutStyle layoutStyle);
 
-    <E extends org.maxwe.epub.parser.core.ISection> void typeset(E section);
+    IChapterTypesetter typeset(IChapterTypesetter chapterTypesetter);
 }

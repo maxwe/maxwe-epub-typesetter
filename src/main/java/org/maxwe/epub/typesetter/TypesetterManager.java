@@ -1,6 +1,7 @@
 package org.maxwe.epub.typesetter;
 
-import org.maxwe.epub.typesetter.core.IPage;
+import org.maxwe.epub.parser.core.IChapter;
+import org.maxwe.epub.typesetter.core.IPageTypesetter;
 
 import java.util.LinkedList;
 
@@ -27,12 +28,12 @@ public class TypesetterManager {
     /**
      * 向后排版的页面集
      */
-    private LinkedList<IPage> nextPages = new LinkedList<IPage>();
+    private LinkedList<IPageTypesetter> nextPages = new LinkedList<IPageTypesetter>();
 
     /**
      * 向前排版的页面集
      */
-    private LinkedList<IPage> previousPages = new LinkedList<IPage>();
+    private LinkedList<IPageTypesetter> previousPages = new LinkedList<IPageTypesetter>();
 
     /**
      * 向后排版的最大缓存数量
@@ -47,21 +48,13 @@ public class TypesetterManager {
     private int screenWidth = 1080;
     private int screenHeight = 1920;
 
-
-
     private Thread nextPageThread = new Thread();
     private Thread previousPageThread = new Thread();
     private Thread pageNumberThread = new Thread();
 
-    public void nextPageTypesetter(){
-
+    public LinkedList<IPageTypesetter> chapterTypesetter(IChapter chapter){
+        return null;
     }
-
-
-    public void previousPageTypesetter(){
-
-    }
-
 
     public void calculatorPageNumber(){
 
