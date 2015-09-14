@@ -1,12 +1,9 @@
 package org.maxwe.epub.typesetter.impl;
 
+import org.maxwe.epub.parser.core.IChapter;
 import org.maxwe.epub.parser.core.INavigation;
 import org.maxwe.epub.parser.core.IParagraph;
-import org.maxwe.epub.parser.core.ISection;
-import org.maxwe.epub.parser.impl.Audio;
-import org.maxwe.epub.parser.impl.Image;
-import org.maxwe.epub.parser.impl.Text;
-import org.maxwe.epub.parser.impl.Video;
+import org.maxwe.epub.typesetter.constant.Configer;
 import org.maxwe.epub.typesetter.core.IChapterTypesetter;
 import org.maxwe.epub.typesetter.core.IPageTypesetter;
 import org.maxwe.epub.typesetter.core.ISectionTypesetter;
@@ -29,9 +26,22 @@ public class PageTypesetter implements IPageTypesetter {
     private int currentX;
     private int currentY;
     private INavigation navigation;
-    private int paragraphOffset;
-    private int sectionOffset;
-    private int offset;
+
+    /**
+     * 页面的起始偏移量
+     */
+    private int startParagraphOffset;
+    private int startSectionOffset;
+    private int startOffset;
+
+    /**
+     * 页面的结束偏移量
+     * 也就是当前偏移量
+     */
+    private int endParagraphOffset;
+    private int endSectionOffset;
+    private int endOffset;
+
     private LinkedList<ISectionTypesetter> sectionTypesetters = new LinkedList<ISectionTypesetter>();
 
     public PageTypesetter() {
@@ -73,16 +83,28 @@ public class PageTypesetter implements IPageTypesetter {
         return this.navigation;
     }
 
-    public int paragraphOffset() {
-        return this.paragraphOffset;
+    public int getStartParagraphOffset() {
+        return this.startParagraphOffset;
     }
 
-    public int sectionOffset() {
-        return this.sectionOffset;
+    public int getEndParagraphOffset() {
+        return this.endParagraphOffset;
     }
 
-    public int offset() {
-        return offset;
+    public int getStartSectionOffset() {
+        return this.startSectionOffset;
+    }
+
+    public int getEndSectionOffset() {
+        return this.endSectionOffset;
+    }
+
+    public int getStartOffset() {
+        return this.startOffset;
+    }
+
+    public int getEndOffset() {
+        return this.endOffset;
     }
 
     public LinkedList<ISectionTypesetter> getSectionsTypesetter() {
@@ -90,65 +112,34 @@ public class PageTypesetter implements IPageTypesetter {
     }
 
     public void typeset(IChapterTypesetter chapterTypesetter) {
-        this.paragraphOffset = chapterTypesetter.getParagraphOffset();
-        this.sectionOffset = chapterTypesetter.getSectionOffset();
-        this.offset = chapterTypesetter.getOffset();
+        IChapter chapter = chapterTypesetter.getChapter();
+
+        /**
+         * 初始化偏移量
+         */
+        this.startParagraphOffset = this.endParagraphOffset = chapterTypesetter.getParagraphOffset();
+        this.startSectionOffset = this.endSectionOffset = chapterTypesetter.getSectionOffset();
+        this.startOffset = this.endOffset = chapterTypesetter.getOffset();
+
+        /**
+         * 行排版
+         */
+        while (this.currentY + Configer.CONFIGER_WORD_SIZE <= this.endY){
+            /**
+             * 列排版
+             * 即行间排版
+             */
+            while (this.currentX + Configer.CONFIGER_WORD_SIZE <= this.endX){
+
+                this.currentX = this.currentX + Configer.CONFIGER_WORD_SIZE;
+            }
+            this.currentY = this.currentY + Configer.CONFIGER_LINE_SPACING;
+        }
+
+
 
         LinkedList<IParagraph> paragraphs = chapterTypesetter.getChapter().getParagraphs();
         int sizeOfParagraphs = paragraphs.size();
-        /**
-         * 段落排版
-         */
-        for (int i = chapterTypesetter.getParagraphOffset(); i < sizeOfParagraphs; i++ ) {
-            /**
-             * 片段排版
-             */
-            LinkedList<ISection> sections = paragraphs.get(i).getSections();
-            int sizeOfSection = sections.size();
-            for (int j = chapterTypesetter.getOffset(); j < sizeOfSection; j++) {
-                /**
-                 * 元素排版
-                 */
-                ISection section = sections.get(j);
-                if (section instanceof Text) {
-                    TextTypesetter textTypesetter = new TextTypesetter();
 
-                    this.sectionTypesetters.add(textTypesetter);
-                    Text text = (Text) section;
-
-                    String text1 = text.getText();
-                    text1.length();
-                } else if (section instanceof Image) {
-                    ImageTypesetter imageTypesetter = new ImageTypesetter();
-                    this.sectionTypesetters.add(imageTypesetter);
-                    /**
-                     * Image是单元素对象，排版完成后重置偏移量
-                     */
-                    chapterTypesetter.setOffset(0);
-                } else if (section instanceof Audio) {
-                    AudioTypesetter audioTypesetter = new AudioTypesetter();
-                    this.sectionTypesetters.add(audioTypesetter);
-                    /**
-                     * Audio是单元素对象，排版完成后重置偏移量
-                     */
-                    chapterTypesetter.setOffset(0);
-                } else if (section instanceof Video) {
-                    VideoTypesetter videoTypesetter = new VideoTypesetter();
-                    this.sectionTypesetters.add(videoTypesetter);
-                    /**
-                     * Video是单元素对象，排版完成后重置偏移量
-                     */
-                    chapterTypesetter.setOffset(0);
-                }
-                /**
-                 * 一个片段排版完成后片段排版偏移量增加1
-                 */
-                chapterTypesetter.setSectionOffset(j + 1);
-            }
-            /**
-             * 一个段落排版完成后段落排版偏移量增加1
-             */
-            chapterTypesetter.setParagraphOffset(i + 1);
-        }
     }
 }

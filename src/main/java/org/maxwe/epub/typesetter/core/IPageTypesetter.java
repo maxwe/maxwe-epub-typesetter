@@ -57,19 +57,22 @@ public interface IPageTypesetter{
      * 所属段落在章节中的偏移量
      * @return
      */
-    int paragraphOffset();
+    int getStartParagraphOffset();
+    int getEndParagraphOffset();
 
     /**
      * 所属片段在段落中的偏移量
      * @return
      */
-    int sectionOffset();
+    int getStartSectionOffset();
+    int getEndSectionOffset();
 
     /**
      * 所属文字在片段中的偏移量
      * @return
      */
-    int offset();
+    int getStartOffset();
+    int getEndOffset();
 
     LinkedList<ISectionTypesetter> getSectionsTypesetter();
 
