@@ -3,10 +3,17 @@ package org.maxwe.epub.typesetter.impl;
 import org.maxwe.epub.parser.core.IChapter;
 import org.maxwe.epub.parser.core.INavigation;
 import org.maxwe.epub.parser.core.IParagraph;
+import org.maxwe.epub.parser.core.ISection;
+import org.maxwe.epub.parser.impl.Audio;
+import org.maxwe.epub.parser.impl.Image;
+import org.maxwe.epub.parser.impl.Text;
+import org.maxwe.epub.parser.impl.Video;
 import org.maxwe.epub.typesetter.constant.Configer;
+import org.maxwe.epub.typesetter.constant.LayoutStyle;
 import org.maxwe.epub.typesetter.core.IChapterTypesetter;
 import org.maxwe.epub.typesetter.core.IPageTypesetter;
 import org.maxwe.epub.typesetter.core.ISectionTypesetter;
+import org.maxwe.epub.typesetter.core.ITypesetter;
 
 import java.util.LinkedList;
 
@@ -111,6 +118,18 @@ public class PageTypesetter implements IPageTypesetter {
         return this.sectionTypesetters;
     }
 
+    public <E extends ITypesetter> E setFontSize(int size) {
+        return null;
+    }
+
+    public <E extends ITypesetter> E setTypeface(Object typeface) {
+        return null;
+    }
+
+    public <E extends ITypesetter> E setLayoutStyle(LayoutStyle layoutStyle) {
+        return null;
+    }
+
     public void typeset(IChapterTypesetter chapterTypesetter) {
         IChapter chapter = chapterTypesetter.getChapter();
 
@@ -121,22 +140,35 @@ public class PageTypesetter implements IPageTypesetter {
         this.startSectionOffset = this.endSectionOffset = chapterTypesetter.getSectionOffset();
         this.startOffset = this.endOffset = chapterTypesetter.getOffset();
 
-        /**
-         * 行排版
-         */
-        while (this.currentY + Configer.CONFIGER_WORD_SIZE <= this.endY){
-            /**
-             * 列排版
-             * 即行间排版
-             */
-            while (this.currentX + Configer.CONFIGER_WORD_SIZE <= this.endX){
+        boolean continueTypesetting = true;
 
-                this.currentX = this.currentX + Configer.CONFIGER_WORD_SIZE;
+        while(continueTypesetting){
+            IParagraph paragraph = chapter.getParagraph(this.endParagraphOffset);
+            ISection section = paragraph.getSection(this.endSectionOffset);
+
+            if (section instanceof Text){
+                Text text = ((Text) section);
+                /**
+                 * 行排版
+                 */
+                while (this.currentY + Configer.CONFIGER_WORD_SIZE <= this.endY){
+                    /**
+                     * 列排版
+                     * 即行间排版
+                     */
+                    while (this.currentX + Configer.CONFIGER_WORD_SIZE <= this.endX){
+                        this.currentX = this.currentX + Configer.CONFIGER_WORD_SIZE;
+                    }
+                    this.currentY = this.currentY + Configer.CONFIGER_LINE_SPACING;
+                }
+            }else if (section instanceof Image){
+
+            }else if (section instanceof Audio){
+
+            }else if (section instanceof Video){
+
             }
-            this.currentY = this.currentY + Configer.CONFIGER_LINE_SPACING;
         }
-
-
 
         LinkedList<IParagraph> paragraphs = chapterTypesetter.getChapter().getParagraphs();
         int sizeOfParagraphs = paragraphs.size();

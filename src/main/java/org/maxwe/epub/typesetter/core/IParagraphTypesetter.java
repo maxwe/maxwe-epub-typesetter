@@ -1,11 +1,10 @@
 package org.maxwe.epub.typesetter.core;
 
 /**
- * Created by Pengwei Ding on 2015-09-13 09:13.
+ * Created by Pengwei Ding on 2015-09-15 16:34.
  * Email: www.dingpengwei@foxmail.com www.dingpegnwei@gmail.com
  * Description: @TODO
  */
-public interface ISectionTypesetter extends ITypesetter {
-
+public interface IParagraphTypesetter extends ITypesetter {
 
 }

@@ -9,7 +9,7 @@ import java.util.LinkedList;
  * Email: www.dingpengwei@foxmail.com www.dingpegnwei@gmail.com
  * Description: @TODO
  */
-public interface IPageTypesetter{
+public interface IPageTypesetter extends ITypesetter{
 
     /**
      * 提供标题
@@ -22,30 +22,6 @@ public interface IPageTypesetter{
      * @return
      */
     String getIndex();
-
-    /**
-     * 设置XY轴的起始排版点坐标
-     * @param x X轴坐标
-     * @param y Y轴坐标
-     * @param <E> 子类
-     * @return 子类实例
-     */
-    <E extends IPageTypesetter> E setStartPoint(int x,int y);
-
-    /**
-     * 设置最大可排版的结束点
-     * @param x 可用的绘制区域的宽
-     * @param y 可用的绘制区域的高
-     * @param <E> 子类
-     * @return 子类实例
-     */
-    <E extends IPageTypesetter> E setEndPoint(int x,int y);
-
-    /**
-     * 实际的排版结束点
-     * @return X轴坐标 Y轴坐标
-     */
-    int[] getEndPoint();
 
     /**
      * 提供当页面所属的章节
@@ -76,5 +52,4 @@ public interface IPageTypesetter{
 
     LinkedList<ISectionTypesetter> getSectionsTypesetter();
 
-    void typeset(IChapterTypesetter chapterTypesetter);
 }

@@ -14,7 +14,7 @@ public class Configer {
     /**
      * 字间距
      */
-    public static final int CONFIGER_WORD_SPACING = 25;
+    public static final int CONFIGER_WORD_SPACING = 2;
     /**
      * 字边距
      */

@@ -21,16 +21,16 @@ public interface ITypesetter extends Serializable {
     <E extends ITypesetter> E setStartPoint(int x,int y);
 
     /**
-     * 设置可用的绘制区域的宽高
-     * @param width 可用的绘制区域的宽
-     * @param height 可用的绘制区域的高
+     * 设置最大可排版的结束点
+     * @param x 可用的绘制区域的宽
+     * @param y 可用的绘制区域的高
      * @param <E> 子类
      * @return 子类实例
      */
-    <E extends ITypesetter> E setTypesetterArea(int width,int height);
+    <E extends ITypesetter> E setEndPoint(int x,int y);
 
     /**
-     * XY轴实际的排版结束点
+     * 实际的排版结束点
      * @return X轴坐标 Y轴坐标
      */
     int[] getEndPoint();
@@ -39,5 +39,5 @@ public interface ITypesetter extends Serializable {
     <E extends ITypesetter> E setFontSize(int size);
     <E extends ITypesetter> E setLayoutStyle(LayoutStyle layoutStyle);
 
-    IChapterTypesetter typeset(IChapterTypesetter chapterTypesetter);
+    void typeset(IChapterTypesetter chapterTypesetter);
 }
