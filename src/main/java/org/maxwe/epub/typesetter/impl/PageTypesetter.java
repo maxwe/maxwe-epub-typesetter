@@ -13,7 +13,6 @@ import org.maxwe.epub.typesetter.constant.LayoutStyle;
 import org.maxwe.epub.typesetter.core.IChapterTypesetter;
 import org.maxwe.epub.typesetter.core.IPageTypesetter;
 import org.maxwe.epub.typesetter.core.ISectionTypesetter;
-import org.maxwe.epub.typesetter.core.ITypesetter;
 
 import java.util.LinkedList;
 
@@ -57,6 +56,8 @@ public class PageTypesetter implements IPageTypesetter {
     public PageTypesetter(int startX, int startY, int endX, int endY) {
         this.startX = startX;
         this.startY = startY;
+        this.currentX = startX;
+        this.currentY = startY;
         this.endX = endX;
         this.endY = endY;
     }
@@ -118,20 +119,21 @@ public class PageTypesetter implements IPageTypesetter {
         return this.sectionTypesetters;
     }
 
-    public <E extends ITypesetter> E setFontSize(int size) {
-        return null;
+    public PageTypesetter setFontSize(int size) {
+        return this;
     }
 
-    public <E extends ITypesetter> E setTypeface(Object typeface) {
-        return null;
+    public PageTypesetter setTypeface(Object typeface) {
+        return this;
     }
 
-    public <E extends ITypesetter> E setLayoutStyle(LayoutStyle layoutStyle) {
-        return null;
+    public PageTypesetter setLayoutStyle(LayoutStyle layoutStyle) {
+        return this;
     }
 
     public void typeset(IChapterTypesetter chapterTypesetter) {
         IChapter chapter = chapterTypesetter.getChapter();
+
 
         /**
          * 初始化偏移量
