@@ -1,6 +1,7 @@
 package org.maxwe.epub.typesetter.core;
 
 import org.maxwe.epub.parser.core.INavigation;
+import org.maxwe.epub.typesetter.impl.ASectionTypesetter;
 
 import java.util.LinkedList;
 
@@ -9,47 +10,47 @@ import java.util.LinkedList;
  * Email: www.dingpengwei@foxmail.com www.dingpegnwei@gmail.com
  * Description: @TODO
  */
-public interface IPageTypesetter extends ITypesetter{
+public abstract class APageTypesetter extends ASectionTypesetter{
 
     /**
      * 提供标题
      * @return
      */
-    String getTitle();
+    public abstract String getTitle();
 
     /**
      * 提供当前的页码
      * @return
      */
-    String getIndex();
+    public abstract String getIndex();
 
     /**
      * 提供当页面所属的章节
      * @return
      */
-    INavigation getNavigation();
+    public abstract INavigation getNavigation();
 
     /**
      * 所属段落在章节中的偏移量
      * @return
      */
-    int getStartParagraphOffset();
-    int getEndParagraphOffset();
+    public abstract int getStartParagraphOffset();
+    public abstract int getEndParagraphOffset();
 
     /**
      * 所属片段在段落中的偏移量
      * @return
      */
-    int getStartSectionOffset();
-    int getEndSectionOffset();
+    public abstract int getStartSectionOffset();
+    public abstract int getEndSectionOffset();
 
     /**
      * 所属文字在片段中的偏移量
      * @return
      */
-    int getStartOffset();
-    int getEndOffset();
+    public abstract int getStartOffset();
+    public abstract int getEndOffset();
 
-    LinkedList<ISectionTypesetter> getSectionsTypesetter();
+    public abstract LinkedList<AParagraphTypesetter> getParagraphTypesetters();
 
 }

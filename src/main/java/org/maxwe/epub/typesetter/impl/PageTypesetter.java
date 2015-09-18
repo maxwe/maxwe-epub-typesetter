@@ -2,16 +2,10 @@ package org.maxwe.epub.typesetter.impl;
 
 import org.maxwe.epub.parser.core.IChapter;
 import org.maxwe.epub.parser.core.INavigation;
-import org.maxwe.epub.parser.core.IParagraph;
-import org.maxwe.epub.parser.core.ISection;
-import org.maxwe.epub.parser.impl.Audio;
-import org.maxwe.epub.parser.impl.Image;
-import org.maxwe.epub.parser.impl.Text;
-import org.maxwe.epub.parser.impl.Video;
-import org.maxwe.epub.typesetter.constant.Configer;
 import org.maxwe.epub.typesetter.constant.LayoutStyle;
+import org.maxwe.epub.typesetter.core.APageTypesetter;
 import org.maxwe.epub.typesetter.core.IChapterTypesetter;
-import org.maxwe.epub.typesetter.core.IPageTypesetter;
+import org.maxwe.epub.typesetter.core.AParagraphTypesetter;
 import org.maxwe.epub.typesetter.core.ISectionTypesetter;
 
 import java.util.LinkedList;
@@ -21,16 +15,10 @@ import java.util.LinkedList;
  * Email: www.dingpengwei@foxmail.com www.dingpegnwei@gmail.com
  * Description: @TODO
  */
-public class PageTypesetter implements IPageTypesetter {
+public class PageTypesetter extends APageTypesetter {
 
     private String title;
     private String index;
-    private int startX;
-    private int startY;
-    private int endX;
-    private int endY;
-    private int currentX;
-    private int currentY;
     private INavigation navigation;
 
     /**
@@ -48,10 +36,7 @@ public class PageTypesetter implements IPageTypesetter {
     private int endSectionOffset;
     private int endOffset;
 
-    private LinkedList<ISectionTypesetter> sectionTypesetters = new LinkedList<ISectionTypesetter>();
-
-    public PageTypesetter() {
-    }
+    private LinkedList<AParagraphTypesetter> paragraphTypesetters = new LinkedList<AParagraphTypesetter>();
 
     public PageTypesetter(int startX, int startY, int endX, int endY) {
         this.startX = startX;
@@ -69,18 +54,6 @@ public class PageTypesetter implements IPageTypesetter {
 
     public String getIndex() {
         return this.index;
-    }
-
-    public PageTypesetter setStartPoint(int x, int y) {
-        this.startX = x;
-        this.startY = y;
-        return this;
-    }
-
-    public PageTypesetter setEndPoint(int x, int y) {
-        this.endX = x;
-        this.endY = y;
-        return this;
     }
 
     public int[] getEndPoint() {
@@ -115,8 +88,8 @@ public class PageTypesetter implements IPageTypesetter {
         return this.endOffset;
     }
 
-    public LinkedList<ISectionTypesetter> getSectionsTypesetter() {
-        return this.sectionTypesetters;
+    public LinkedList<AParagraphTypesetter> getParagraphTypesetters() {
+        return this.paragraphTypesetters;
     }
 
     public PageTypesetter setFontSize(int size) {
@@ -133,47 +106,15 @@ public class PageTypesetter implements IPageTypesetter {
 
     public void typeset(IChapterTypesetter chapterTypesetter) {
         IChapter chapter = chapterTypesetter.getChapter();
-
-
-        /**
-         * 初始化偏移量
-         */
-        this.startParagraphOffset = this.endParagraphOffset = chapterTypesetter.getParagraphOffset();
-        this.startSectionOffset = this.endSectionOffset = chapterTypesetter.getSectionOffset();
-        this.startOffset = this.endOffset = chapterTypesetter.getOffset();
-
-        boolean continueTypesetting = true;
-
-        while(continueTypesetting){
-            IParagraph paragraph = chapter.getParagraph(this.endParagraphOffset);
-            ISection section = paragraph.getSection(this.endSectionOffset);
-
-            if (section instanceof Text){
-                Text text = ((Text) section);
-                /**
-                 * 行排版
-                 */
-                while (this.currentY + Configer.CONFIGER_WORD_SIZE <= this.endY){
-                    /**
-                     * 列排版
-                     * 即行间排版
-                     */
-                    while (this.currentX + Configer.CONFIGER_WORD_SIZE <= this.endX){
-                        this.currentX = this.currentX + Configer.CONFIGER_WORD_SIZE;
-                    }
-                    this.currentY = this.currentY + Configer.CONFIGER_LINE_SPACING;
-                }
-            }else if (section instanceof Image){
-
-            }else if (section instanceof Audio){
-
-            }else if (section instanceof Video){
-
-            }
+        int paragraphLength = chapter.getParagraphLength();
+        while (this.currentY <= this.endY && chapterTypesetter.getParagraphOffset() < paragraphLength) {
+            ISectionTypesetter paragraphTypesetter = new ParagraphTypesetter();
+            paragraphTypesetter.setStartPoint(this.currentX, this.currentY);
+            paragraphTypesetter.setEndPoint(this.endX,this.endY);
+            paragraphTypesetter.typeset(chapterTypesetter);
+            this.currentX = paragraphTypesetter.getEndPoint()[0];
+            this.currentY = paragraphTypesetter.getEndPoint()[1];
+            this.paragraphTypesetters.add((AParagraphTypesetter)paragraphTypesetter);
         }
-
-        LinkedList<IParagraph> paragraphs = chapterTypesetter.getChapter().getParagraphs();
-        int sizeOfParagraphs = paragraphs.size();
-
     }
 }

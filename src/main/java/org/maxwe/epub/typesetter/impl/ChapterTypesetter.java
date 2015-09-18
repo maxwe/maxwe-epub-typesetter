@@ -3,7 +3,7 @@ package org.maxwe.epub.typesetter.impl;
 import org.maxwe.epub.parser.core.IChapter;
 import org.maxwe.epub.parser.core.INavigation;
 import org.maxwe.epub.typesetter.core.IChapterTypesetter;
-import org.maxwe.epub.typesetter.core.IPageTypesetter;
+import org.maxwe.epub.typesetter.core.APageTypesetter;
 
 import java.util.LinkedList;
 
@@ -18,9 +18,8 @@ public class ChapterTypesetter implements IChapterTypesetter {
     private int paragraphOffset;
     private int sectionOffset;
     private int offset;
-    private LinkedList<IPageTypesetter> pagesOfChapter = new LinkedList<IPageTypesetter>();
 
-
+    private LinkedList<APageTypesetter> pagesOfChapter = new LinkedList<APageTypesetter>();
 
     public ChapterTypesetter(IChapter chapter) {
         this.chapter = chapter;
@@ -28,7 +27,7 @@ public class ChapterTypesetter implements IChapterTypesetter {
     }
 
     public String getTitle() {
-        return null;
+        return this.title;
     }
 
     public INavigation getNavigation() {
@@ -36,19 +35,19 @@ public class ChapterTypesetter implements IChapterTypesetter {
     }
 
     public IChapter getChapter() {
-        return null;
+        return this.chapter;
     }
 
     public int getParagraphOffset() {
-        return 0;
+        return this.paragraphOffset;
     }
 
     public int getSectionOffset() {
-        return 0;
+        return this.sectionOffset;
     }
 
     public int getOffset() {
-        return 0;
+        return offset;
     }
 
     public void setParagraphOffset(int paragraphOffset) {
@@ -62,4 +61,5 @@ public class ChapterTypesetter implements IChapterTypesetter {
     public void setOffset(int offset) {
         this.offset = offset;
     }
+
 }

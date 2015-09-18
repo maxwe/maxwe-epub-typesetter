@@ -1,7 +1,8 @@
 package org.maxwe.epub.typesetter;
 
-import org.maxwe.epub.parser.core.IChapter;
-import org.maxwe.epub.typesetter.core.IPageTypesetter;
+import org.maxwe.epub.typesetter.core.IChapterTypesetter;
+import org.maxwe.epub.typesetter.core.APageTypesetter;
+import org.maxwe.epub.typesetter.impl.PageTypesetter;
 
 import java.util.LinkedList;
 
@@ -26,37 +27,27 @@ public class TypesetterManager {
     }
 
     /**
-     * 向后排版的页面集
+     * 页面集
      */
-    private LinkedList<IPageTypesetter> nextPages = new LinkedList<IPageTypesetter>();
+    private LinkedList<APageTypesetter> tempPages = new LinkedList<APageTypesetter>();
 
-    /**
-     * 向前排版的页面集
-     */
-    private LinkedList<IPageTypesetter> previousPages = new LinkedList<IPageTypesetter>();
 
-    /**
-     * 向后排版的最大缓存数量
-     */
-    private static final int MAX_NEXT_PAGE_COUNTER = 5;
+    private int screenWidth = 320;
+    private int screenHeight = 480;
 
-    /**
-     * 向前排版的最大缓存数量
-     */
-    private static final int MAX_PREVIOUS_PAGE_COUNTER = 5;
-
-    private int screenWidth = 1080;
-    private int screenHeight = 1920;
-
-    private Thread nextPageThread = new Thread();
-    private Thread previousPageThread = new Thread();
-    private Thread pageNumberThread = new Thread();
-
-    public LinkedList<IPageTypesetter> chapterTypesetter(IChapter chapter){
-        return null;
+    public void typeset(IChapterTypesetter chapterTypesetter){
+        /**
+         * 段落不止
+         * 排版不息
+         */
+        while (chapterTypesetter.getParagraphOffset() < chapterTypesetter.getChapter().getParagraphLength()){
+            APageTypesetter pageTypesetter = new PageTypesetter(0,0,screenWidth,screenHeight);
+            pageTypesetter.typeset(chapterTypesetter);
+            this.tempPages.add(pageTypesetter);
+        }
     }
 
-    public void calculatorPageNumber(){
-
+    public LinkedList<APageTypesetter> getPages() {
+        return tempPages;
     }
 }

@@ -7,6 +7,7 @@ import org.maxwe.epub.parser.impl.Audio;
 import org.maxwe.epub.parser.impl.Image;
 import org.maxwe.epub.parser.impl.Text;
 import org.maxwe.epub.parser.impl.Video;
+import org.maxwe.epub.typesetter.core.AParagraphTypesetter;
 import org.maxwe.epub.typesetter.core.IChapterTypesetter;
 import org.maxwe.epub.typesetter.core.ISectionTypesetter;
 
@@ -17,7 +18,7 @@ import java.util.LinkedList;
  * Email: www.dingpengwei@foxmail.com www.dingpegnwei@gmail.com
  * Description: @TODO
  */
-public class ParagraphTypesetter extends ASectionTypesetter {
+public class ParagraphTypesetter extends AParagraphTypesetter {
 
     private LinkedList<ISectionTypesetter> sectionTypesetters = new LinkedList<ISectionTypesetter>();
 
@@ -44,6 +45,9 @@ public class ParagraphTypesetter extends ASectionTypesetter {
             } else if (section instanceof Video) {
                 sectionTypesetter = new VideoTypesetter();
             }
+            sectionTypesetter.setStartPoint(this.currentX,this.currentY);
+            sectionTypesetter.setEndPoint(this.endX,this.endY);
+
             sectionTypesetter.typeset(chapterTypesetter);
             this.currentX = sectionTypesetter.getEndPoint()[0];
             this.currentY = sectionTypesetter.getEndPoint()[1];
@@ -51,6 +55,7 @@ public class ParagraphTypesetter extends ASectionTypesetter {
         }
 
         if (chapterTypesetter.getSectionOffset() >= sectionLength){
+            chapterTypesetter.setSectionOffset(0);
             chapterTypesetter.setParagraphOffset(chapterTypesetter.getParagraphOffset() + 1);
         }
     }

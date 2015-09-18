@@ -54,12 +54,20 @@ public class TextTypesetter extends ASectionTypesetter {
                  */
                 this.currentX = this.currentX + Configer.CONFIGER_WORD_SIZE + Configer.CONFIGER_WORD_SPACING;
             }
-            this.words.put(this.currentX, lineWords);
+
+            this.currentX = this.startX;
+            this.words.put(this.currentY, lineWords);
             /**
              * Y轴坐标的一定：当前行的位置+单个文字所占用的大小+行间距=下一行的位置
              */
             this.currentY = this.currentY + Configer.CONFIGER_WORD_SIZE + Configer.CONFIGER_LINE_SPACING;
         }
+
+        if (currentOffset >= originLength){
+            chapterTypesetter.setOffset(0);
+            chapterTypesetter.setSectionOffset(chapterTypesetter.getSectionOffset() + 1);
+        }
+
     }
 
     public LinkedHashMap<Integer, LinkedHashMap<Integer, String>> getWords() {
