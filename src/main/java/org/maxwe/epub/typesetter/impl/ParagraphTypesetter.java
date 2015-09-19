@@ -63,4 +63,9 @@ public class ParagraphTypesetter extends AParagraphTypesetter {
     public LinkedList<ISectionTypesetter> getSectionTypesetters() {
         return sectionTypesetters;
     }
+
+    @Override
+    public void print() {
+
+    }
 }

@@ -7,5 +7,5 @@ package org.maxwe.epub.typesetter.core;
  */
 public interface ISectionTypesetter extends ITypesetter {
 
-
+    void print();
 }

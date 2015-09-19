@@ -51,12 +51,13 @@ public class ImageTypesetter extends ASectionTypesetter {
     }
 
     /**
-     * 使用占位符矩阵的方式打印图像
+     * 使用占位符矩阵标示图像
      */
+    @Override
     public void print() {
         for (int i = 0; i < 20; i++) {
             if (i==10){
-                System.out.print(this.imagePath);
+                System.out.print(this.imagePath + " {" + this.currentX + "," + this.currentY + "}");
             }else {
                 for (int j=0;j<50;j++){
                     System.out.print("#");

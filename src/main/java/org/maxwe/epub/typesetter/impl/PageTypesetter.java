@@ -117,4 +117,9 @@ public class PageTypesetter extends APageTypesetter {
             this.paragraphTypesetters.add((AParagraphTypesetter)paragraphTypesetter);
         }
     }
+
+    @Override
+    public void print() {
+
+    }
 }

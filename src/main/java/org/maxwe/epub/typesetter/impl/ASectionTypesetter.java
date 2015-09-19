@@ -50,4 +50,7 @@ public abstract class ASectionTypesetter implements ISectionTypesetter{
     }
 
     public abstract void typeset(IChapterTypesetter chapterTypesetter);
+
+    public abstract void print();
+
 }

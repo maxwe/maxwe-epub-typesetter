@@ -6,6 +6,8 @@ import org.maxwe.epub.typesetter.constant.Configer;
 import org.maxwe.epub.typesetter.core.IChapterTypesetter;
 
 import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by Pengwei Ding on 2015-09-12 12:57.
@@ -72,5 +74,21 @@ public class TextTypesetter extends ASectionTypesetter {
 
     public LinkedHashMap<Integer, LinkedHashMap<Integer, String>> getWords() {
         return words;
+    }
+
+    @Override
+    public void print() {
+        Set<Map.Entry<Integer, LinkedHashMap<Integer, String>>> lineEntries = this.words.entrySet();
+        for (Map.Entry<Integer, LinkedHashMap<Integer, String>> lineEntry : lineEntries) {
+            Integer lineY = lineEntry.getKey();
+            LinkedHashMap<Integer, String> lineValue = lineEntry.getValue();
+            Set<Map.Entry<Integer, String>> entries = lineValue.entrySet();
+            for (Map.Entry<Integer, String> entry : entries) {
+                Integer key = entry.getKey();
+                String value = entry.getValue();
+                System.out.print(value + "{" + String.format("% 4d", key) + "," + String.format("% 4d", lineY) + "} ");
+            }
+            System.out.println("\n");
+        }
     }
 }

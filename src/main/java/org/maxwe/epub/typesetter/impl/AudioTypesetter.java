@@ -13,4 +13,9 @@ public class AudioTypesetter extends ASectionTypesetter {
     public void typeset(IChapterTypesetter chapterTypesetter) {
 
     }
+
+    @Override
+    public void print() {
+
+    }
 }

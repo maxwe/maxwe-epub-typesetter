@@ -8,15 +8,10 @@ import org.maxwe.epub.typesetter.core.APageTypesetter;
 import org.maxwe.epub.typesetter.core.AParagraphTypesetter;
 import org.maxwe.epub.typesetter.core.ISectionTypesetter;
 import org.maxwe.epub.typesetter.impl.ChapterTypesetter;
-import org.maxwe.epub.typesetter.impl.ImageTypesetter;
-import org.maxwe.epub.typesetter.impl.TextTypesetter;
 
 import java.io.File;
 import java.text.DecimalFormat;
-import java.util.LinkedHashMap;
 import java.util.LinkedList;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * Created by Pengwei Ding on 2015-09-09 19:17.
@@ -58,20 +53,7 @@ public class SingleChapterTypesetter extends TestCase {
                     System.out.println("------------分段线--------------");
                     LinkedList<ISectionTypesetter> sectionTypesetters = paragraphTypesetter.getSectionTypesetters();
                     for (ISectionTypesetter sectionTypesetter:sectionTypesetters){
-                        if (sectionTypesetter instanceof TextTypesetter) {
-                            Set<Map.Entry<Integer, LinkedHashMap<Integer, String>>> lineEntries = ((TextTypesetter) sectionTypesetter).getWords().entrySet();
-                            for (Map.Entry<Integer, LinkedHashMap<Integer, String>> lineEntry : lineEntries) {
-                                Integer lineY = lineEntry.getKey();
-                                LinkedHashMap<Integer, String> lineValue = lineEntry.getValue();
-                                Set<Map.Entry<Integer, String>> entries = lineValue.entrySet();
-                                for (Map.Entry<Integer, String> entry : entries) {
-                                    Integer key = entry.getKey();
-                                    String value = entry.getValue();
-                                    System.out.print(value + "{" + String.format("% 4d", key) + "," + String.format("% 4d", lineY) + "} ");
-                                }
-                                System.out.println("\n");
-                            }
-                        }
+                        sectionTypesetter.print();
                     }
                 }
             }
@@ -110,9 +92,46 @@ public class SingleChapterTypesetter extends TestCase {
                     System.out.println("------------分段线--------------");
                     LinkedList<ISectionTypesetter> sectionTypesetters = paragraphTypesetter.getSectionTypesetters();
                     for (ISectionTypesetter sectionTypesetter:sectionTypesetters){
-                        if (sectionTypesetter instanceof ImageTypesetter) {
-                            ((ImageTypesetter) sectionTypesetter).print();
-                        }
+                        sectionTypesetter.print();
+                    }
+                }
+            }
+        } else {
+            assertFalse("测试文件不存在", true);
+        }
+    }
+
+    /*
+    文本图片混合排版测试
+    取值第二章
+    章节文件名称Copyright.xhtml
+    章节共有文本段落7个，图片段落一个
+    图片位于最后，图片信息204x147
+     */
+    private final int INDEX_OF_TEXT_IMAGE = 1;
+
+    @Test
+    public void testTextImageTypesetter() throws Exception{
+        if (new File(this.path).exists()) {
+            Book book = new Book(this.path);
+            System.out.println("############ 章节名：" + book.getNavigations().get(INDEX_OF_TEXT_IMAGE).getTitle() + "############");
+            System.out.println("############ 章节位置：" + book.getNavigations().get(INDEX_OF_TEXT_IMAGE).getHref() + "############");
+            long start = System.nanoTime();
+            TypesetterManager.getInstance().typeset(new ChapterTypesetter(new Chapter(book.getNavigation(INDEX_OF_TEXT_IMAGE).getHref())));
+            long duration = System.nanoTime() - start;
+            DecimalFormat decimalFormat = new DecimalFormat("$,###");
+            System.out.println("排版耗时：" + decimalFormat.format(duration).replace("$", "") + "毫微妙");
+            LinkedList<APageTypesetter> pageTypesetters = TypesetterManager.getInstance().getPages();
+            System.out.println("共有页数：" + pageTypesetters.size());
+
+            for (APageTypesetter pageTypesetter : pageTypesetters) {
+                System.out.println("===============分页线=================");
+                LinkedList<AParagraphTypesetter> paragraphTypesetters = pageTypesetter.getParagraphTypesetters();
+                for (AParagraphTypesetter paragraphTypesetter:paragraphTypesetters){
+                    System.out.println("------------分段线--------------");
+                    LinkedList<ISectionTypesetter> sectionTypesetters = paragraphTypesetter.getSectionTypesetters();
+                    for (ISectionTypesetter sectionTypesetter:sectionTypesetters){
+                        sectionTypesetter.print();
                     }
                 }
             }
