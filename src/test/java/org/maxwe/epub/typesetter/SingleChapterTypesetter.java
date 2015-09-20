@@ -140,4 +140,44 @@ public class SingleChapterTypesetter extends TestCase {
         }
     }
 
+
+
+    /*
+    文本图片混合排版测试
+    取值第四章
+    章节文件名称ds00216102.xhtml
+    章节共有文本段落7个，图片段落一个
+    图片位于最后，图片信息204x147
+     */
+    private final int INDEX_OF_TEXT_AUDIO_VIDEO = 3;
+
+    @Test
+    public void testTextAudioVideoTypesetter() throws Exception{
+        if (new File(this.path).exists()) {
+            Book book = new Book(this.path);
+            System.out.println("############ 章节名：" + book.getNavigations().get(INDEX_OF_TEXT_AUDIO_VIDEO).getTitle() + "############");
+            System.out.println("############ 章节位置：" + book.getNavigations().get(INDEX_OF_TEXT_AUDIO_VIDEO).getHref() + "############");
+            long start = System.nanoTime();
+            TypesetterManager.getInstance().typeset(new ChapterTypesetter(new Chapter(book.getNavigation(INDEX_OF_TEXT_AUDIO_VIDEO).getHref())));
+            long duration = System.nanoTime() - start;
+            DecimalFormat decimalFormat = new DecimalFormat("$,###");
+            System.out.println("排版耗时：" + decimalFormat.format(duration).replace("$", "") + "毫微妙");
+            LinkedList<APageTypesetter> pageTypesetters = TypesetterManager.getInstance().getPages();
+            System.out.println("共有页数：" + pageTypesetters.size());
+
+            for (APageTypesetter pageTypesetter : pageTypesetters) {
+                System.out.println("===============分页线=================");
+                LinkedList<AParagraphTypesetter> paragraphTypesetters = pageTypesetter.getParagraphTypesetters();
+                for (AParagraphTypesetter paragraphTypesetter:paragraphTypesetters){
+                    System.out.println("------------分段线--------------");
+                    LinkedList<ISectionTypesetter> sectionTypesetters = paragraphTypesetter.getSectionTypesetters();
+                    for (ISectionTypesetter sectionTypesetter:sectionTypesetters){
+                        sectionTypesetter.print();
+                    }
+                }
+            }
+        } else {
+            assertFalse("测试文件不存在", true);
+        }
+    }
 }

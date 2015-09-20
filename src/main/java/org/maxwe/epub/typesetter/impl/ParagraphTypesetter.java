@@ -33,7 +33,7 @@ public class ParagraphTypesetter extends AParagraphTypesetter {
          * 若片段偏移量在片段长度范围内表示该段落还有片段没有排版完成
          * 终止条件1：超出排版区域范围；2：超出排版内容范围
          */
-        while (this.currentY <= this.endY && chapterTypesetter.getSectionOffset() < sectionLength) {
+        while (this.currentY < this.endY && chapterTypesetter.getSectionOffset() < sectionLength) {
             ISection section = paragraph.getSection(chapterTypesetter.getSectionOffset());
             ISectionTypesetter sectionTypesetter = null;
             if (section instanceof Text) {
@@ -51,7 +51,12 @@ public class ParagraphTypesetter extends AParagraphTypesetter {
             sectionTypesetter.typeset(chapterTypesetter);
             this.currentX = sectionTypesetter.getEndPoint()[0];
             this.currentY = sectionTypesetter.getEndPoint()[1];
-            this.sectionTypesetters.add(sectionTypesetter);
+
+            if (this.currentY <= this.endY){
+                this.sectionTypesetters.add(sectionTypesetter);
+            }
+
+            this.currentX = this.startX;
         }
 
         if (chapterTypesetter.getSectionOffset() >= sectionLength){

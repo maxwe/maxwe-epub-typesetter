@@ -45,8 +45,10 @@ public class ImageTypesetter extends ASectionTypesetter {
         this.currentX = this.currentX + width;
         this.currentY = this.currentY + height;
 
-        chapterTypesetter.setOffset(0);
-        chapterTypesetter.setSectionOffset(chapterTypesetter.getSectionOffset() + 1);
+        if (this.currentY <= this.currentY){
+            chapterTypesetter.setOffset(0);
+            chapterTypesetter.setSectionOffset(chapterTypesetter.getSectionOffset() + 1);
+        }
 
     }
 

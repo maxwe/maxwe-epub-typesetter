@@ -107,7 +107,7 @@ public class PageTypesetter extends APageTypesetter {
     public void typeset(IChapterTypesetter chapterTypesetter) {
         IChapter chapter = chapterTypesetter.getChapter();
         int paragraphLength = chapter.getParagraphLength();
-        while (this.currentY <= this.endY && chapterTypesetter.getParagraphOffset() < paragraphLength) {
+        while (this.currentY < this.endY && chapterTypesetter.getParagraphOffset() < paragraphLength) {
             ISectionTypesetter paragraphTypesetter = new ParagraphTypesetter();
             paragraphTypesetter.setStartPoint(this.currentX, this.currentY);
             paragraphTypesetter.setEndPoint(this.endX,this.endY);
