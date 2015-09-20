@@ -106,20 +106,24 @@ public class PageTypesetter extends APageTypesetter {
 
     public void typeset(IChapterTypesetter chapterTypesetter) {
         IChapter chapter = chapterTypesetter.getChapter();
+        this.title = chapter.getTitle();
         int paragraphLength = chapter.getParagraphLength();
         while (this.currentY < this.endY && chapterTypesetter.getParagraphOffset() < paragraphLength) {
             ISectionTypesetter paragraphTypesetter = new ParagraphTypesetter();
             paragraphTypesetter.setStartPoint(this.currentX, this.currentY);
-            paragraphTypesetter.setEndPoint(this.endX,this.endY);
+            paragraphTypesetter.setEndPoint(this.endX, this.endY);
             paragraphTypesetter.typeset(chapterTypesetter);
             this.currentX = paragraphTypesetter.getEndPoint()[0];
             this.currentY = paragraphTypesetter.getEndPoint()[1];
-            this.paragraphTypesetters.add((AParagraphTypesetter)paragraphTypesetter);
+            this.paragraphTypesetters.add((AParagraphTypesetter) paragraphTypesetter);
         }
     }
 
     @Override
     public void print() {
-
+        System.out.println("==============分页线，页标题：" + this.getTitle() + "=================");
+        for (AParagraphTypesetter paragraphTypesetter : this.paragraphTypesetters) {
+            paragraphTypesetter.print();
+        }
     }
 }

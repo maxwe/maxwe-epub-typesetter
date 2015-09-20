@@ -5,8 +5,6 @@ import org.junit.Test;
 import org.maxwe.epub.parser.impl.Book;
 import org.maxwe.epub.parser.impl.Chapter;
 import org.maxwe.epub.typesetter.core.APageTypesetter;
-import org.maxwe.epub.typesetter.core.AParagraphTypesetter;
-import org.maxwe.epub.typesetter.core.ISectionTypesetter;
 import org.maxwe.epub.typesetter.impl.ChapterTypesetter;
 
 import java.io.File;
@@ -47,15 +45,7 @@ public class SingleChapterTypesetter extends TestCase {
             System.out.println("共有页数：" + pageTypesetters.size());
 
             for (APageTypesetter pageTypesetter : pageTypesetters) {
-                System.out.println("===============分页线=================");
-                LinkedList<AParagraphTypesetter> paragraphTypesetters = pageTypesetter.getParagraphTypesetters();
-                for (AParagraphTypesetter paragraphTypesetter:paragraphTypesetters){
-                    System.out.println("------------分段线--------------");
-                    LinkedList<ISectionTypesetter> sectionTypesetters = paragraphTypesetter.getSectionTypesetters();
-                    for (ISectionTypesetter sectionTypesetter:sectionTypesetters){
-                        sectionTypesetter.print();
-                    }
-                }
+                pageTypesetter.print();
             }
         } else {
             assertFalse("测试文件不存在", true);
@@ -86,15 +76,7 @@ public class SingleChapterTypesetter extends TestCase {
             System.out.println("共有页数：" + pageTypesetters.size());
 
             for (APageTypesetter pageTypesetter : pageTypesetters) {
-                System.out.println("===============分页线=================");
-                LinkedList<AParagraphTypesetter> paragraphTypesetters = pageTypesetter.getParagraphTypesetters();
-                for (AParagraphTypesetter paragraphTypesetter:paragraphTypesetters){
-                    System.out.println("------------分段线--------------");
-                    LinkedList<ISectionTypesetter> sectionTypesetters = paragraphTypesetter.getSectionTypesetters();
-                    for (ISectionTypesetter sectionTypesetter:sectionTypesetters){
-                        sectionTypesetter.print();
-                    }
-                }
+                pageTypesetter.print();
             }
         } else {
             assertFalse("测试文件不存在", true);
@@ -125,15 +107,7 @@ public class SingleChapterTypesetter extends TestCase {
             System.out.println("共有页数：" + pageTypesetters.size());
 
             for (APageTypesetter pageTypesetter : pageTypesetters) {
-                System.out.println("===============分页线=================");
-                LinkedList<AParagraphTypesetter> paragraphTypesetters = pageTypesetter.getParagraphTypesetters();
-                for (AParagraphTypesetter paragraphTypesetter:paragraphTypesetters){
-                    System.out.println("------------分段线--------------");
-                    LinkedList<ISectionTypesetter> sectionTypesetters = paragraphTypesetter.getSectionTypesetters();
-                    for (ISectionTypesetter sectionTypesetter:sectionTypesetters){
-                        sectionTypesetter.print();
-                    }
-                }
+                pageTypesetter.print();
             }
         } else {
             assertFalse("测试文件不存在", true);
@@ -166,15 +140,7 @@ public class SingleChapterTypesetter extends TestCase {
             System.out.println("共有页数：" + pageTypesetters.size());
 
             for (APageTypesetter pageTypesetter : pageTypesetters) {
-                System.out.println("===============分页线=================");
-                LinkedList<AParagraphTypesetter> paragraphTypesetters = pageTypesetter.getParagraphTypesetters();
-                for (AParagraphTypesetter paragraphTypesetter:paragraphTypesetters){
-                    System.out.println("------------分段线--------------");
-                    LinkedList<ISectionTypesetter> sectionTypesetters = paragraphTypesetter.getSectionTypesetters();
-                    for (ISectionTypesetter sectionTypesetter:sectionTypesetters){
-                        sectionTypesetter.print();
-                    }
-                }
+                pageTypesetter.print();
             }
         } else {
             assertFalse("测试文件不存在", true);

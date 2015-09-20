@@ -7,7 +7,7 @@ import org.maxwe.epub.typesetter.core.IChapterTypesetter;
 /**
  * Created by Pengwei Ding on 2015-09-13 09:15.
  * Email: www.dingpengwei@foxmail.com www.dingpegnwei@gmail.com
- * Description: @TODO
+ * Description: 排版规则：尽情的排，但是排版过的是否合格（超出页面范围）是有上层片段进行判别的
  */
 public class AudioTypesetter extends ASectionTypesetter {
 
@@ -55,7 +55,7 @@ public class AudioTypesetter extends ASectionTypesetter {
                 System.out.print(this.imagePath + " {" + this.currentX + "," + this.currentY + "}");
             }else {
                 for (int j=0;j<25;j++){
-                    System.out.print("*");
+                    System.out.print("♬");
                 }
             }
             System.out.println();

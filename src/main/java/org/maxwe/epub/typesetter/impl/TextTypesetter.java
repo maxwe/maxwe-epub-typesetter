@@ -63,8 +63,21 @@ public class TextTypesetter extends ASectionTypesetter {
              * Y轴坐标的一定：当前行的位置+单个文字所占用的大小+行间距=下一行的位置
              */
             this.currentY = this.currentY + Configer.CONFIGER_WORD_SIZE + Configer.CONFIGER_LINE_SPACING;
+
+            /**
+             * 上层的排版依据的是在页面范围之内的排版才能添加到排版集合中
+             * 此处消除当前Y轴的文字大小以及行间距的提前量
+             */
+            if (this.currentY > this.endY){
+                this.currentY = this.endY;
+            }
         }
 
+        /**
+         * 受限于整体架构的设计
+         * 终止条件比较特殊
+         * 需要文字排版完成
+         */
         if (currentOffset >= originLength){
             chapterTypesetter.setOffset(0);
             chapterTypesetter.setSectionOffset(chapterTypesetter.getSectionOffset() + 1);
@@ -88,7 +101,7 @@ public class TextTypesetter extends ASectionTypesetter {
                 String value = entry.getValue();
                 System.out.print(value + "{" + String.format("% 4d", key) + "," + String.format("% 4d", lineY) + "} ");
             }
-            System.out.println("\n");
+            System.out.println("");
         }
     }
 }

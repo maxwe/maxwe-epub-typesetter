@@ -11,7 +11,7 @@ import java.io.File;
 /**
  * Created by Pengwei Ding on 2015-09-13 09:15.
  * Email: www.dingpengwei@foxmail.com www.dingpegnwei@gmail.com
- * Description: 图片排版 计算图片的方式受限于android平台的相关API
+ * Description: 图片排版 计算图片的方式受限于平台的相关API
  */
 public class ImageTypesetter extends ASectionTypesetter {
 
@@ -57,11 +57,12 @@ public class ImageTypesetter extends ASectionTypesetter {
      */
     @Override
     public void print() {
-        for (int i = 0; i < 20; i++) {
-            if (i==10){
+        for (int i = 0; i < 10; i++) {
+            if (i==5){
+                System.out.println("图片区域");
                 System.out.print(this.imagePath + " {" + this.currentX + "," + this.currentY + "}");
             }else {
-                for (int j=0;j<50;j++){
+                for (int j=0;j<25;j++){
                     System.out.print("#");
                 }
             }
