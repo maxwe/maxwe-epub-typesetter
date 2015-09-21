@@ -1,10 +1,9 @@
-package org.maxwe.epub;
+package org.maxwe.epub.typesetter;
 
 import org.maxwe.epub.parser.core.IMetadata;
 import org.maxwe.epub.parser.core.INavigation;
 import org.maxwe.epub.parser.impl.Book;
 import org.maxwe.epub.parser.impl.Chapter;
-import org.maxwe.epub.typesetter.TypesetterManager;
 import org.maxwe.epub.typesetter.core.APageTypesetter;
 import org.maxwe.epub.typesetter.impl.ChapterTypesetter;
 
@@ -18,14 +17,16 @@ import java.util.Scanner;
  * Description: @TODO
  */
 public class Main {
+
     private static String filePath = Main.class.getResource("/").getPath() + "sample";
+
     public static void main(String[] args) {
         while (true) {
             System.out.println("=========请选择========");
             System.out.println("输入0:打开默认图书，输入路径打开制定的图书");
             Scanner scanner = new Scanner(System.in);
             String line = scanner.nextLine();
-            if (line.equals("")) {
+            if (line.equals("")) { 
                 System.out.println("输入错误，请重新输入");
             } else if (line.equals("0")) {
                 openBook(filePath);
