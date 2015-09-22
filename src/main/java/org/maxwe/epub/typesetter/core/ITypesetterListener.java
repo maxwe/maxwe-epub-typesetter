@@ -5,9 +5,9 @@ package org.maxwe.epub.typesetter.core;
  * Email: www.dingpengwei@foxmail.com www.dingpegnwei@gmail.com
  * Description: @TODO
  */
-public interface TypesetterListener {
-    void onStart(APageTypesetter pageTypesetter);
+public interface ITypesetterListener {
+    void onStart();
     void onProgress(APageTypesetter pageTypesetter);
-    void onFinish(APageTypesetter pageTypesetter);
-    void onError(APageTypesetter pageTypesetter,Exception exception);
+    void onFinish();
+    void onError(Exception exception);
 }

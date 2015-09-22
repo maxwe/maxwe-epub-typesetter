@@ -5,7 +5,7 @@ package org.maxwe.epub.typesetter.core;
  * Email: www.dingpengwei@foxmail.com www.dingpegnwei@gmail.com
  * Description: @TODO
  */
-public interface PageNumberCalculatorListener {
+public interface IPageNumberCalculatorListener {
     void onStart();
     void onProgress(int current);
     void onFinish(int total);
