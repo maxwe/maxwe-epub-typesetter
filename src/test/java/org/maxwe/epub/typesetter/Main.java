@@ -26,7 +26,7 @@ public class Main {
             System.out.println("输入0:打开默认图书，输入路径打开制定的图书");
             Scanner scanner = new Scanner(System.in);
             String line = scanner.nextLine();
-            if (line.equals("")) { 
+            if (line.equals("")) {
                 System.out.println("输入错误，请重新输入");
             } else if (line.equals("0")) {
                 openBook(filePath);
@@ -42,9 +42,11 @@ public class Main {
     }
 
     private static void openBook(String filePath) throws Exception{
-        Book book = null;
+        Book book;
+        IBookTypesetter bookTypesetter;
         try {
-            book = new Book(filePath);
+            book =new Book(filePath);
+            bookTypesetter= new BookTypesetter(book);
         } catch (Exception e) {
             System.out.println("解析图书异常" + e.getMessage());
             return;
@@ -62,7 +64,7 @@ public class Main {
             } else if (line.equals("2")) {
                 openChapter(book);
             } else if (line.equals("3")) {
-                reader(book);
+                reader(bookTypesetter);
             }
         }
     }
@@ -107,33 +109,25 @@ public class Main {
         }
     }
 
-    public static void reader(Book book) throws Exception{
-        LinkedList<INavigation> navigations = book.getNavigations();
-        INavigation navigation = navigations.getFirst();
-        TypesetterManager.getInstance().typeset(new ChapterTypesetter(new Chapter(navigation.getHref())));
-        LinkedList<APageTypesetter> pages = TypesetterManager.getInstance().getPages();
-        int index = 0;
+    public static void reader(IBookTypesetter bookTypesetter) throws Exception{
+        bookTypesetter.getNextPage().print();
         while (true){
-            pages.get(index).print();
-
             System.out.println("输入N:下一页；输入P:上一页；输入Q:退出");
             Scanner scanner = new Scanner(System.in);
             String line = scanner.nextLine();
             if ("n".equalsIgnoreCase(line)){
-                index ++;
-                if (index >= pages.size()){
-                    index = pages.size() - 1;
-                }
+                bookTypesetter.getNextPage().print();
             }else if ("p".equalsIgnoreCase(line)){
-                index --;
-                if (index < 0){
-                    index = 0;
-                }
+
             }else if ("q".equalsIgnoreCase(line)){
                 break;
             }else{
                 System.out.println("输入错误，请重新输入");
             }
+            System.out.println("\n" +
+                    "\n" +
+                    "\n" +
+                    "\n");
         }
 
     }

@@ -4,10 +4,6 @@ import org.maxwe.epub.parser.core.ISection;
 import org.maxwe.epub.parser.impl.Image;
 import org.maxwe.epub.typesetter.core.IChapterTypesetter;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.File;
-
 /**
  * Created by Pengwei Ding on 2015-09-13 09:15.
  * Email: www.dingpengwei@foxmail.com www.dingpegnwei@gmail.com
@@ -32,15 +28,10 @@ public class ImageTypesetter extends ASectionTypesetter {
         Image image = (Image) section;
         this.imagePath = image.getMediaPath();
 
-        BufferedImage bufferedImage = null;
-        try {
-            bufferedImage = ImageIO.read(new File(this.imagePath));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
-        int width = bufferedImage.getWidth();
-        int height = bufferedImage.getHeight();
+
+        int width = 300;
+        int height = 300;
 
         this.currentX = this.currentX + width;
         this.currentY = this.currentY + height;

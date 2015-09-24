@@ -2,6 +2,7 @@ package org.maxwe.epub.typesetter.impl;
 
 import org.maxwe.epub.parser.core.IChapter;
 import org.maxwe.epub.parser.core.INavigation;
+import org.maxwe.epub.parser.impl.Chapter;
 import org.maxwe.epub.typesetter.core.IChapterTypesetter;
 import org.maxwe.epub.typesetter.core.APageTypesetter;
 
@@ -23,6 +24,11 @@ public class ChapterTypesetter implements IChapterTypesetter {
 
     public ChapterTypesetter(IChapter chapter) {
         this.chapter = chapter;
+        this.title = this.chapter.getTitle();
+    }
+
+    public ChapterTypesetter(INavigation navigation) throws Exception{
+        this.chapter = new Chapter(navigation.getHref());
         this.title = this.chapter.getTitle();
     }
 
