@@ -118,7 +118,7 @@ public class Main {
             if ("n".equalsIgnoreCase(line)){
                 bookTypesetter.getNextPage().print();
             }else if ("p".equalsIgnoreCase(line)){
-
+                bookTypesetter.getPreviousPage().print();
             }else if ("q".equalsIgnoreCase(line)){
                 break;
             }else{
