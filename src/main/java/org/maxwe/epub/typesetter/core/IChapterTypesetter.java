@@ -24,8 +24,6 @@ public interface IChapterTypesetter {
     List<APageTypesetter> getPageTypesetters();
     int getPageTypesetterSize();
     IChapterTypesetter typeset(int screenWidth,int screenHeight);
-    APageTypesetter getNextPage();
-    APageTypesetter getPreviousPage();
-    boolean hasExcess();
-    int getExcessPagesSize();
+    void print();
+
 }

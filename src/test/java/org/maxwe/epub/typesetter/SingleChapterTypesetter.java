@@ -30,14 +30,15 @@ public class SingleChapterTypesetter extends TestCase {
      */
     private final int INDEX_OF_PLAIN_TEXT = 2;
 
+
     @Test
     public void testPlainTextTypesetter() throws Exception {
         if (new File(this.path).exists()) {
             Book book = new Book(this.path);
-            System.out.println("############ 章节名：" + book.getNavigations().get(INDEX_OF_PLAIN_TEXT).getTitle() + "############");
-            System.out.println("############ 章节位置：" + book.getNavigations().get(INDEX_OF_PLAIN_TEXT).getHref() + "############");
+            System.out.println("############ 章节名：" + book.getContent().getNavigation(INDEX_OF_PLAIN_TEXT).getTitle() + "############");
+            System.out.println("############ 章节位置：" + book.getContent().getNavigation(INDEX_OF_PLAIN_TEXT).getHref() + "############");
             long start = System.nanoTime();
-            TypesetterManager.getInstance().typeset(new ChapterTypesetter(new Chapter(book.getNavigation(INDEX_OF_PLAIN_TEXT).getHref())));
+            TypesetterManager.getInstance().typeset(new ChapterTypesetter(new Chapter(book.getContent().getNavigation(INDEX_OF_PLAIN_TEXT).getHref())));
             long duration = System.nanoTime() - start;
             DecimalFormat decimalFormat = new DecimalFormat("$,###");
             System.out.println("排版耗时：" + decimalFormat.format(duration).replace("$", "") + "毫微妙");
@@ -65,10 +66,10 @@ public class SingleChapterTypesetter extends TestCase {
     public void testPlainImageTypesetter() throws Exception{
         if (new File(this.path).exists()) {
             Book book = new Book(this.path);
-            System.out.println("############ 章节名：" + book.getNavigations().get(INDEX_OF_PLAIN_IMAGE).getTitle() + "############");
-            System.out.println("############ 章节位置：" + book.getNavigations().get(INDEX_OF_PLAIN_IMAGE).getHref() + "############");
+            System.out.println("############ 章节名：" + book.getContent().getNavigation(INDEX_OF_PLAIN_IMAGE).getTitle() + "############");
+            System.out.println("############ 章节位置：" + book.getContent().getNavigation(INDEX_OF_PLAIN_IMAGE).getHref() + "############");
             long start = System.nanoTime();
-            TypesetterManager.getInstance().typeset(new ChapterTypesetter(new Chapter(book.getNavigation(INDEX_OF_PLAIN_IMAGE).getHref())));
+            TypesetterManager.getInstance().typeset(new ChapterTypesetter(new Chapter(book.getContent().getNavigation(INDEX_OF_PLAIN_IMAGE).getHref())));
             long duration = System.nanoTime() - start;
             DecimalFormat decimalFormat = new DecimalFormat("$,###");
             System.out.println("排版耗时：" + decimalFormat.format(duration).replace("$", "") + "毫微妙");
@@ -96,10 +97,10 @@ public class SingleChapterTypesetter extends TestCase {
     public void testTextImageTypesetter() throws Exception{
         if (new File(this.path).exists()) {
             Book book = new Book(this.path);
-            System.out.println("############ 章节名：" + book.getNavigations().get(INDEX_OF_TEXT_IMAGE).getTitle() + "############");
-            System.out.println("############ 章节位置：" + book.getNavigations().get(INDEX_OF_TEXT_IMAGE).getHref() + "############");
+            System.out.println("############ 章节名：" + book.getContent().getNavigation(INDEX_OF_TEXT_IMAGE).getTitle() + "############");
+            System.out.println("############ 章节位置：" + book.getContent().getNavigation(INDEX_OF_TEXT_IMAGE).getHref() + "############");
             long start = System.nanoTime();
-            TypesetterManager.getInstance().typeset(new ChapterTypesetter(new Chapter(book.getNavigation(INDEX_OF_TEXT_IMAGE).getHref())));
+            TypesetterManager.getInstance().typeset(new ChapterTypesetter(new Chapter(book.getContent().getNavigation(INDEX_OF_TEXT_IMAGE).getHref())));
             long duration = System.nanoTime() - start;
             DecimalFormat decimalFormat = new DecimalFormat("$,###");
             System.out.println("排版耗时：" + decimalFormat.format(duration).replace("$", "") + "毫微妙");
@@ -129,10 +130,10 @@ public class SingleChapterTypesetter extends TestCase {
     public void testTextAudioVideoTypesetter() throws Exception{
         if (new File(this.path).exists()) {
             Book book = new Book(this.path);
-            System.out.println("############ 章节名：" + book.getNavigations().get(INDEX_OF_TEXT_AUDIO_VIDEO).getTitle() + "############");
-            System.out.println("############ 章节位置：" + book.getNavigations().get(INDEX_OF_TEXT_AUDIO_VIDEO).getHref() + "############");
+            System.out.println("############ 章节名：" + book.getContent().getNavigation(INDEX_OF_TEXT_AUDIO_VIDEO).getTitle() + "############");
+            System.out.println("############ 章节位置：" + book.getContent().getNavigation(INDEX_OF_TEXT_AUDIO_VIDEO).getHref() + "############");
             long start = System.nanoTime();
-            TypesetterManager.getInstance().typeset(new ChapterTypesetter(new Chapter(book.getNavigation(INDEX_OF_TEXT_AUDIO_VIDEO).getHref())));
+            TypesetterManager.getInstance().typeset(new ChapterTypesetter(new Chapter(book.getContent().getNavigation(INDEX_OF_TEXT_AUDIO_VIDEO).getHref())));
             long duration = System.nanoTime() - start;
             DecimalFormat decimalFormat = new DecimalFormat("$,###");
             System.out.println("排版耗时：" + decimalFormat.format(duration).replace("$", "") + "毫微妙");

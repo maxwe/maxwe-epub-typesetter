@@ -85,38 +85,6 @@ public class ChapterTypesetter implements IChapterTypesetter {
         return this.pageTypesetters.size();
     }
 
-    public APageTypesetter getNextPage() {
-        this.currentPageIndex++;
-        if (this.currentPageIndex >= 0 && this.currentPageIndex < this.pageTypesetters.size()) {
-            return this.pageTypesetters.get(this.currentPageIndex);
-        } else {
-            return null;
-        }
-    }
-
-    public APageTypesetter getPreviousPage() {
-        this.currentPageIndex--;
-        if (this.currentPageIndex >= 0 && this.currentPageIndex < this.pageTypesetters.size()) {
-            return this.pageTypesetters.get(this.currentPageIndex);
-        } else {
-            return null;
-        }
-    }
-
-    public boolean hasExcess() {
-        if (this.currentPageIndex > 0 && this.currentPageIndex < this.pageTypesetters.size() - 1){
-            return true;
-        }
-        return false;
-    }
-
-    public int getExcessPagesSize() {
-        if (this.currentPageIndex == -1){
-            return this.pageTypesetters.size();
-        }
-        return this.pageTypesetters.size() - this.currentPageIndex;
-    }
-
     public IChapterTypesetter typeset(int screenWidth, int screenHeight) {
         while (this.getParagraphOffset() < this.getChapter().getParagraphLength()) {
             APageTypesetter pageTypesetter = new PageTypesetter(0, 0, screenWidth, screenHeight);
@@ -124,5 +92,11 @@ public class ChapterTypesetter implements IChapterTypesetter {
             this.pageTypesetters.add(pageTypesetter);
         }
         return this;
+    }
+
+    public void print() {
+        for (APageTypesetter pageTypesetter:this.pageTypesetters){
+            pageTypesetter.print();
+        }
     }
 }

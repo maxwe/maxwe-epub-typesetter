@@ -1,5 +1,6 @@
 package org.maxwe.epub.typesetter;
 
+import org.maxwe.epub.parser.core.IChapter;
 import org.maxwe.epub.parser.core.IMetadata;
 import org.maxwe.epub.parser.core.INavigation;
 import org.maxwe.epub.parser.impl.Book;
@@ -12,21 +13,22 @@ import java.util.LinkedList;
 import java.util.Scanner;
 
 /**
- * Created by Pengwei Ding on 2015-09-20 22:47.
+ * Created by Pengwei Ding on 2015-09-26 09:24.
  * Email: www.dingpengwei@foxmail.com www.dingpegnwei@gmail.com
  * Description: @TODO
  */
-public class Main {
-
-    private static String filePath = Main.class.getResource("/").getPath() + "sample";
+public class TypesetterTest {
+    private static String filePath = SingleChapterTypesetter.class.getResource("/").getPath() + "sample";
 
     public static void main(String[] args) throws Exception {
         while (true) {
             System.out.println("=========请选择========");
-            System.out.println("输入0:打开默认图书，输入路径打开制定的图书");
+            System.out.println("输入0:打开默认图书；输入路径打开制定的图书；输入Q退出");
             Scanner scanner = new Scanner(System.in);
             String line = scanner.nextLine();
-            if (line.equals("")) {
+            if (line.equalsIgnoreCase("q")){
+                 break;
+            }else if (line.equals("")) {
                 System.out.println("输入错误，请重新输入");
             } else if (line.equals("0")) {
                 openBook(filePath);
@@ -40,20 +42,17 @@ public class Main {
             }
         }
     }
-
     private static void openBook(String filePath) throws Exception{
         Book book;
-        IBookTypesetter bookTypesetter;
         try {
             book =new Book(filePath);
-            bookTypesetter= new BookTypesetter(book);
         } catch (Exception e) {
             System.out.println("解析图书异常" + e.getMessage());
             return;
         }
 
         while (true) {
-            System.out.println("输入1:查看图书信息；输入2:查看图书目录；输入3：阅读；输入Q:退出");
+            System.out.println("输入1:查看图书信息；输入2:查看图书目录；输入章节ID：阅读；输入Q:退出");
             Scanner scanner = new Scanner(System.in);
             String line = scanner.nextLine();
             if (line.equalsIgnoreCase("Q")) {
@@ -63,14 +62,19 @@ public class Main {
                 metadata.print();
             } else if (line.equals("2")) {
                 openChapter(book);
-            } else if (line.equals("3")) {
-                reader(bookTypesetter);
+            } else {
+                IChapter iChapter = book.getContent().navigateTo(line);
+                if (iChapter == null){
+                    System.out.println("章节不存在");
+                }else {
+                    new ChapterTypesetter(iChapter).print();
+                }
             }
         }
     }
 
     private static void openChapter(Book book) {
-        LinkedList<INavigation> navigations = book.getNavigations();
+        LinkedList<INavigation> navigations = book.getContent().getNavigation();
         for (INavigation navigation : navigations) {
             navigation.print();
         }
@@ -107,28 +111,5 @@ public class Main {
                 }
             }
         }
-    }
-
-    public static void reader(IBookTypesetter bookTypesetter) throws Exception{
-        bookTypesetter.getNextPage().print();
-        while (true){
-            System.out.println("输入N:下一页；输入P:上一页；输入Q:退出");
-            Scanner scanner = new Scanner(System.in);
-            String line = scanner.nextLine();
-            if ("n".equalsIgnoreCase(line)){
-                bookTypesetter.getNextPage().print();
-            }else if ("p".equalsIgnoreCase(line)){
-                bookTypesetter.getPreviousPage().print();
-            }else if ("q".equalsIgnoreCase(line)){
-                break;
-            }else{
-                System.out.println("输入错误，请重新输入");
-            }
-            System.out.println("\n" +
-                    "\n" +
-                    "\n" +
-                    "\n");
-        }
-
     }
 }
