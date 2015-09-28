@@ -13,6 +13,7 @@ import java.util.List;
 public interface IChapterTypesetter {
     String getChapterId();
     String getTitle();
+    int getIndex();
     INavigation getNavigation();
     IChapter getChapter();
     int getParagraphOffset();

@@ -17,6 +17,7 @@ import java.util.List;
 public class ChapterTypesetter implements IChapterTypesetter {
     private IChapter chapter;
     private String title;
+    private int index;
     private int paragraphOffset;
     private int sectionOffset;
     private int offset;
@@ -35,6 +36,7 @@ public class ChapterTypesetter implements IChapterTypesetter {
     public ChapterTypesetter(INavigation navigation) throws Exception {
         this.chapter = new Chapter(navigation.getHref());
         this.title = this.chapter.getTitle();
+        this.index = navigation.getIndex();
     }
 
     public String getChapterId() {
@@ -43,6 +45,10 @@ public class ChapterTypesetter implements IChapterTypesetter {
 
     public String getTitle() {
         return this.title;
+    }
+
+    public int getIndex() {
+        return this.index;
     }
 
     public INavigation getNavigation() {
@@ -88,6 +94,7 @@ public class ChapterTypesetter implements IChapterTypesetter {
     public IChapterTypesetter typeset(int screenWidth, int screenHeight) {
         while (this.getParagraphOffset() < this.getChapter().getParagraphLength()) {
             APageTypesetter pageTypesetter = new PageTypesetter(0, 0, screenWidth, screenHeight);
+            pageTypesetter.setIndex(this.pageTypesetters.size());
             pageTypesetter.typeset(this);
             this.pageTypesetters.add(pageTypesetter);
         }
@@ -95,6 +102,7 @@ public class ChapterTypesetter implements IChapterTypesetter {
     }
 
     public void print() {
+        System.out.println("==============章节线，章节标题题：" + this.getTitle() + ",总页码："+ this.getPageTypesetterSize()+"=================");
         for (APageTypesetter pageTypesetter:this.pageTypesetters){
             pageTypesetter.print();
         }

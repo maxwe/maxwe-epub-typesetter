@@ -22,7 +22,8 @@ public abstract class APageTypesetter extends ASectionTypesetter{
      * 提供当前的页码
      * @return
      */
-    public abstract String getIndex();
+    public abstract int getIndex();
+    public abstract void setIndex(int index);
 
     /**
      * 提供当页面所属的章节
