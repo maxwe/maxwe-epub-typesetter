@@ -5,6 +5,7 @@ import org.maxwe.epub.parser.core.INavigation;
 import org.maxwe.epub.parser.impl.Chapter;
 import org.maxwe.epub.typesetter.core.IChapterTypesetter;
 import org.maxwe.epub.typesetter.core.APageTypesetter;
+import org.maxwe.epub.typesetter.core.ITypesetterListener;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -99,6 +100,10 @@ public class ChapterTypesetter implements IChapterTypesetter {
             this.pageTypesetters.add(pageTypesetter);
         }
         return this;
+    }
+
+    public void setTypesetterListener(ITypesetterListener typesetterListener) {
+
     }
 
     public void print() {

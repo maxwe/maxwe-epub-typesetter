@@ -23,14 +23,7 @@ public class Configer {
      * 字号大小
      */
     public static int CONFIGER_WORD_SIZE = 25;
-    /**
-     * 渲染视图的个数
-     */
-    public static final int CONFIGER_RENDER = 3;
-    /**
-     * 前进和后退的缓冲区大小
-     */
-    public static final int CONFIGER_CACHE = 50;
+
     
     
 }

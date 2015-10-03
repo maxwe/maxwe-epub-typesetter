@@ -74,6 +74,13 @@ public class TextTypesetter extends ASectionTypesetter {
         }
 
         /**
+         *  避免初始值过大造成的死循环
+         */
+        if (this.currentY + Configer.CONFIGER_WORD_SIZE > this.endY){
+            this.currentY = this.endY;
+        }
+
+        /**
          * 受限于整体架构的设计
          * 终止条件比较特殊
          * 需要文字排版完成

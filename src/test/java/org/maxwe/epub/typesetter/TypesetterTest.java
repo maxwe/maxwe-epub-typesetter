@@ -6,7 +6,9 @@ import org.maxwe.epub.parser.core.INavigation;
 import org.maxwe.epub.parser.impl.Book;
 import org.maxwe.epub.parser.impl.Chapter;
 import org.maxwe.epub.typesetter.core.APageTypesetter;
+import org.maxwe.epub.typesetter.core.IChapterTypesetter;
 import org.maxwe.epub.typesetter.impl.ChapterTypesetter;
+import org.maxwe.epub.typesetter.impl.PageTypesetter;
 
 import java.io.File;
 import java.util.LinkedList;
@@ -100,8 +102,7 @@ public class TypesetterTest {
                     System.out.println("输入错误");
                 } else {
                     try {
-                        TypesetterManager.getInstance().typeset(new ChapterTypesetter(new Chapter(temp.getHref())));
-                        LinkedList<APageTypesetter> pageTypesetters = TypesetterManager.getInstance().getPages();
+                        LinkedList<APageTypesetter> pageTypesetters = typeset(new ChapterTypesetter(new Chapter(temp.getHref())));
                         for (APageTypesetter pageTypesetter : pageTypesetters) {
                             pageTypesetter.print();
                         }
@@ -111,5 +112,18 @@ public class TypesetterTest {
                 }
             }
         }
+    }
+
+    private static int screenWidth = 320;
+    private static int screenHeight = 480;
+
+    private static LinkedList<APageTypesetter> typeset(IChapterTypesetter chapterTypesetter){
+        LinkedList<APageTypesetter> pageTypesetters = new LinkedList<APageTypesetter>();
+        while (chapterTypesetter.getParagraphOffset() < chapterTypesetter.getChapter().getParagraphLength()){
+            APageTypesetter pageTypesetter = new PageTypesetter(0,0,screenWidth,screenHeight);
+            pageTypesetter.typeset(chapterTypesetter);
+            pageTypesetters.add(pageTypesetter);
+        }
+        return pageTypesetters;
     }
 }

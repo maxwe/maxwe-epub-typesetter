@@ -5,7 +5,9 @@ import org.junit.Test;
 import org.maxwe.epub.parser.impl.Book;
 import org.maxwe.epub.parser.impl.Chapter;
 import org.maxwe.epub.typesetter.core.APageTypesetter;
+import org.maxwe.epub.typesetter.core.IChapterTypesetter;
 import org.maxwe.epub.typesetter.impl.ChapterTypesetter;
+import org.maxwe.epub.typesetter.impl.PageTypesetter;
 
 import java.io.File;
 import java.text.DecimalFormat;
@@ -19,6 +21,20 @@ import java.util.LinkedList;
 public class SingleChapterTypesetter extends TestCase {
 
     private String path = SingleChapterTypesetter.class.getResource("/").getPath() + "sample";
+
+    private int screenWidth = 1400;
+    private int screenHeight = 2560;
+
+    private LinkedList<APageTypesetter> typeset(IChapterTypesetter chapterTypesetter){
+        LinkedList<APageTypesetter> pageTypesetters = new LinkedList<APageTypesetter>();
+        while (chapterTypesetter.getParagraphOffset() < chapterTypesetter.getChapter().getParagraphLength()){
+            APageTypesetter pageTypesetter = new PageTypesetter(0,0,screenWidth,screenHeight);
+            pageTypesetter.typeset(chapterTypesetter);
+            pageTypesetters.add(pageTypesetter);
+        }
+        return pageTypesetters;
+    }
+
     /*
     纯文本排版测试
     取值第三章
@@ -38,11 +54,10 @@ public class SingleChapterTypesetter extends TestCase {
             System.out.println("############ 章节名：" + book.getContent().getNavigation(INDEX_OF_PLAIN_TEXT).getTitle() + "############");
             System.out.println("############ 章节位置：" + book.getContent().getNavigation(INDEX_OF_PLAIN_TEXT).getHref() + "############");
             long start = System.nanoTime();
-            TypesetterManager.getInstance().typeset(new ChapterTypesetter(new Chapter(book.getContent().getNavigation(INDEX_OF_PLAIN_TEXT).getHref())));
+            LinkedList<APageTypesetter> pageTypesetters = typeset(new ChapterTypesetter(new Chapter(book.getContent().getNavigation(INDEX_OF_PLAIN_TEXT).getHref())));
             long duration = System.nanoTime() - start;
             DecimalFormat decimalFormat = new DecimalFormat("$,###");
             System.out.println("排版耗时：" + decimalFormat.format(duration).replace("$", "") + "毫微妙");
-            LinkedList<APageTypesetter> pageTypesetters = TypesetterManager.getInstance().getPages();
             System.out.println("共有页数：" + pageTypesetters.size());
 
             for (APageTypesetter pageTypesetter : pageTypesetters) {
@@ -69,11 +84,10 @@ public class SingleChapterTypesetter extends TestCase {
             System.out.println("############ 章节名：" + book.getContent().getNavigation(INDEX_OF_PLAIN_IMAGE).getTitle() + "############");
             System.out.println("############ 章节位置：" + book.getContent().getNavigation(INDEX_OF_PLAIN_IMAGE).getHref() + "############");
             long start = System.nanoTime();
-            TypesetterManager.getInstance().typeset(new ChapterTypesetter(new Chapter(book.getContent().getNavigation(INDEX_OF_PLAIN_IMAGE).getHref())));
+            LinkedList<APageTypesetter> pageTypesetters = typeset(new ChapterTypesetter(new Chapter(book.getContent().getNavigation(INDEX_OF_PLAIN_IMAGE).getHref())));
             long duration = System.nanoTime() - start;
             DecimalFormat decimalFormat = new DecimalFormat("$,###");
             System.out.println("排版耗时：" + decimalFormat.format(duration).replace("$", "") + "毫微妙");
-            LinkedList<APageTypesetter> pageTypesetters = TypesetterManager.getInstance().getPages();
             System.out.println("共有页数：" + pageTypesetters.size());
 
             for (APageTypesetter pageTypesetter : pageTypesetters) {
@@ -100,11 +114,10 @@ public class SingleChapterTypesetter extends TestCase {
             System.out.println("############ 章节名：" + book.getContent().getNavigation(INDEX_OF_TEXT_IMAGE).getTitle() + "############");
             System.out.println("############ 章节位置：" + book.getContent().getNavigation(INDEX_OF_TEXT_IMAGE).getHref() + "############");
             long start = System.nanoTime();
-            TypesetterManager.getInstance().typeset(new ChapterTypesetter(new Chapter(book.getContent().getNavigation(INDEX_OF_TEXT_IMAGE).getHref())));
+            LinkedList<APageTypesetter> pageTypesetters = typeset(new ChapterTypesetter(new Chapter(book.getContent().getNavigation(INDEX_OF_TEXT_IMAGE).getHref())));
             long duration = System.nanoTime() - start;
             DecimalFormat decimalFormat = new DecimalFormat("$,###");
             System.out.println("排版耗时：" + decimalFormat.format(duration).replace("$", "") + "毫微妙");
-            LinkedList<APageTypesetter> pageTypesetters = TypesetterManager.getInstance().getPages();
             System.out.println("共有页数：" + pageTypesetters.size());
 
             for (APageTypesetter pageTypesetter : pageTypesetters) {
@@ -133,11 +146,10 @@ public class SingleChapterTypesetter extends TestCase {
             System.out.println("############ 章节名：" + book.getContent().getNavigation(INDEX_OF_TEXT_AUDIO_VIDEO).getTitle() + "############");
             System.out.println("############ 章节位置：" + book.getContent().getNavigation(INDEX_OF_TEXT_AUDIO_VIDEO).getHref() + "############");
             long start = System.nanoTime();
-            TypesetterManager.getInstance().typeset(new ChapterTypesetter(new Chapter(book.getContent().getNavigation(INDEX_OF_TEXT_AUDIO_VIDEO).getHref())));
+            LinkedList<APageTypesetter> pageTypesetters = typeset(new ChapterTypesetter(new Chapter(book.getContent().getNavigation(INDEX_OF_TEXT_AUDIO_VIDEO).getHref())));
             long duration = System.nanoTime() - start;
             DecimalFormat decimalFormat = new DecimalFormat("$,###");
             System.out.println("排版耗时：" + decimalFormat.format(duration).replace("$", "") + "毫微妙");
-            LinkedList<APageTypesetter> pageTypesetters = TypesetterManager.getInstance().getPages();
             System.out.println("共有页数：" + pageTypesetters.size());
 
             for (APageTypesetter pageTypesetter : pageTypesetters) {
