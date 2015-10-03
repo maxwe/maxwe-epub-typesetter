@@ -6,8 +6,8 @@ package org.maxwe.epub.typesetter.core;
  * Description: @TODO
  */
 public interface ITypesetterListener {
-    void onStart();
+    void onStart(IChapterTypesetter chapterTypesetter);
     void onProgress(APageTypesetter pageTypesetter);
-    void onFinish();
+    void onFinish(IChapterTypesetter chapterTypesetter);
     void onError(Exception exception);
 }

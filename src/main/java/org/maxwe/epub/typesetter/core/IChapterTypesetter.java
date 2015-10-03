@@ -3,7 +3,7 @@ package org.maxwe.epub.typesetter.core;
 import org.maxwe.epub.parser.core.IChapter;
 import org.maxwe.epub.parser.core.INavigation;
 
-import java.util.List;
+import java.util.LinkedList;
 
 /**
  * Created by Pengwei Ding on 2015-09-07 15:42.
@@ -19,6 +19,8 @@ public interface IChapterTypesetter {
      * @return
      */
     String getTitle();
+
+    int getIndex();
 
     /**
      * 获取导航信息
@@ -48,7 +50,7 @@ public interface IChapterTypesetter {
      * 排版完成的页面集合
      * @return
      */
-    List<APageTypesetter> getPageTypesetters();
+    LinkedList<APageTypesetter> getPageTypesetters();
     int getPageTypesetterSize();
 
     /**
@@ -58,6 +60,7 @@ public interface IChapterTypesetter {
      * @return
      */
     IChapterTypesetter typeset(int screenWidth,int screenHeight);
+    IChapterTypesetter typeset(int screenWidth,int screenHeight,ITypesetterListener typesetterListener);
 
     /**
      * 设置监听器

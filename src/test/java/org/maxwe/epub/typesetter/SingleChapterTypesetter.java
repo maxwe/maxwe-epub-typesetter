@@ -6,8 +6,8 @@ import org.maxwe.epub.parser.impl.Book;
 import org.maxwe.epub.parser.impl.Chapter;
 import org.maxwe.epub.typesetter.core.APageTypesetter;
 import org.maxwe.epub.typesetter.core.IChapterTypesetter;
+import org.maxwe.epub.typesetter.core.ITypesetterListener;
 import org.maxwe.epub.typesetter.impl.ChapterTypesetter;
-import org.maxwe.epub.typesetter.impl.PageTypesetter;
 
 import java.io.File;
 import java.text.DecimalFormat;
@@ -25,15 +25,24 @@ public class SingleChapterTypesetter extends TestCase {
     private int screenWidth = 1400;
     private int screenHeight = 2560;
 
-    private LinkedList<APageTypesetter> typeset(IChapterTypesetter chapterTypesetter){
-        LinkedList<APageTypesetter> pageTypesetters = new LinkedList<APageTypesetter>();
-        while (chapterTypesetter.getParagraphOffset() < chapterTypesetter.getChapter().getParagraphLength()){
-            APageTypesetter pageTypesetter = new PageTypesetter(0,0,screenWidth,screenHeight);
-            pageTypesetter.typeset(chapterTypesetter);
-            pageTypesetters.add(pageTypesetter);
+    private ITypesetterListener typesetterListener = new ITypesetterListener() {
+        public void onStart(IChapterTypesetter chapterTypesetter) {
+            System.out.println("=====排版《" + chapterTypesetter.getTitle() + "》开始=====");
         }
-        return pageTypesetters;
-    }
+
+        public void onProgress(APageTypesetter pageTypesetter) {
+            System.out.println("=====" + pageTypesetter.getIndex() + "=====");
+            pageTypesetter.print();
+        }
+
+        public void onFinish(IChapterTypesetter chapterTypesetter) {
+            System.out.println("=====排版《" + chapterTypesetter.getTitle() + "》结束=====");
+        }
+
+        public void onError(Exception exception) {
+
+        }
+    };
 
     /*
     纯文本排版测试
@@ -54,14 +63,15 @@ public class SingleChapterTypesetter extends TestCase {
             System.out.println("############ 章节名：" + book.getContent().getNavigation(INDEX_OF_PLAIN_TEXT).getTitle() + "############");
             System.out.println("############ 章节位置：" + book.getContent().getNavigation(INDEX_OF_PLAIN_TEXT).getHref() + "############");
             long start = System.nanoTime();
-            LinkedList<APageTypesetter> pageTypesetters = typeset(new ChapterTypesetter(new Chapter(book.getContent().getNavigation(INDEX_OF_PLAIN_TEXT).getHref())));
+            IChapterTypesetter chapterTypesetter = new ChapterTypesetter(new Chapter(book.getContent().getNavigation(INDEX_OF_PLAIN_TEXT).getHref()));
+            LinkedList<APageTypesetter> pageTypesetters = chapterTypesetter.typeset(screenWidth,screenHeight,typesetterListener).getPageTypesetters();
             long duration = System.nanoTime() - start;
             DecimalFormat decimalFormat = new DecimalFormat("$,###");
             System.out.println("排版耗时：" + decimalFormat.format(duration).replace("$", "") + "毫微妙");
             System.out.println("共有页数：" + pageTypesetters.size());
 
             for (APageTypesetter pageTypesetter : pageTypesetters) {
-                pageTypesetter.print();
+                //pageTypesetter.print();
             }
         } else {
             assertFalse("测试文件不存在", true);
@@ -84,14 +94,15 @@ public class SingleChapterTypesetter extends TestCase {
             System.out.println("############ 章节名：" + book.getContent().getNavigation(INDEX_OF_PLAIN_IMAGE).getTitle() + "############");
             System.out.println("############ 章节位置：" + book.getContent().getNavigation(INDEX_OF_PLAIN_IMAGE).getHref() + "############");
             long start = System.nanoTime();
-            LinkedList<APageTypesetter> pageTypesetters = typeset(new ChapterTypesetter(new Chapter(book.getContent().getNavigation(INDEX_OF_PLAIN_IMAGE).getHref())));
+            IChapterTypesetter chapterTypesetter = new ChapterTypesetter(new Chapter(book.getContent().getNavigation(INDEX_OF_PLAIN_IMAGE).getHref()));
+            LinkedList<APageTypesetter> pageTypesetters = chapterTypesetter.typeset(screenWidth,screenHeight,typesetterListener).getPageTypesetters();
             long duration = System.nanoTime() - start;
             DecimalFormat decimalFormat = new DecimalFormat("$,###");
             System.out.println("排版耗时：" + decimalFormat.format(duration).replace("$", "") + "毫微妙");
             System.out.println("共有页数：" + pageTypesetters.size());
 
             for (APageTypesetter pageTypesetter : pageTypesetters) {
-                pageTypesetter.print();
+                //pageTypesetter.print();
             }
         } else {
             assertFalse("测试文件不存在", true);
@@ -114,14 +125,15 @@ public class SingleChapterTypesetter extends TestCase {
             System.out.println("############ 章节名：" + book.getContent().getNavigation(INDEX_OF_TEXT_IMAGE).getTitle() + "############");
             System.out.println("############ 章节位置：" + book.getContent().getNavigation(INDEX_OF_TEXT_IMAGE).getHref() + "############");
             long start = System.nanoTime();
-            LinkedList<APageTypesetter> pageTypesetters = typeset(new ChapterTypesetter(new Chapter(book.getContent().getNavigation(INDEX_OF_TEXT_IMAGE).getHref())));
+            IChapterTypesetter chapterTypesetter = new ChapterTypesetter(new Chapter(book.getContent().getNavigation(INDEX_OF_TEXT_IMAGE).getHref()));
+            LinkedList<APageTypesetter> pageTypesetters = chapterTypesetter.typeset(screenWidth,screenHeight,typesetterListener).getPageTypesetters();
             long duration = System.nanoTime() - start;
             DecimalFormat decimalFormat = new DecimalFormat("$,###");
             System.out.println("排版耗时：" + decimalFormat.format(duration).replace("$", "") + "毫微妙");
             System.out.println("共有页数：" + pageTypesetters.size());
 
             for (APageTypesetter pageTypesetter : pageTypesetters) {
-                pageTypesetter.print();
+               // pageTypesetter.print();
             }
         } else {
             assertFalse("测试文件不存在", true);
@@ -146,14 +158,15 @@ public class SingleChapterTypesetter extends TestCase {
             System.out.println("############ 章节名：" + book.getContent().getNavigation(INDEX_OF_TEXT_AUDIO_VIDEO).getTitle() + "############");
             System.out.println("############ 章节位置：" + book.getContent().getNavigation(INDEX_OF_TEXT_AUDIO_VIDEO).getHref() + "############");
             long start = System.nanoTime();
-            LinkedList<APageTypesetter> pageTypesetters = typeset(new ChapterTypesetter(new Chapter(book.getContent().getNavigation(INDEX_OF_TEXT_AUDIO_VIDEO).getHref())));
+            IChapterTypesetter chapterTypesetter = new ChapterTypesetter(new Chapter(book.getContent().getNavigation(INDEX_OF_TEXT_AUDIO_VIDEO).getHref()));
+            LinkedList<APageTypesetter> pageTypesetters = chapterTypesetter.typeset(screenWidth,screenHeight,typesetterListener).getPageTypesetters();
             long duration = System.nanoTime() - start;
             DecimalFormat decimalFormat = new DecimalFormat("$,###");
             System.out.println("排版耗时：" + decimalFormat.format(duration).replace("$", "") + "毫微妙");
             System.out.println("共有页数：" + pageTypesetters.size());
 
             for (APageTypesetter pageTypesetter : pageTypesetters) {
-                pageTypesetter.print();
+                //pageTypesetter.print();
             }
         } else {
             assertFalse("测试文件不存在", true);

@@ -3,12 +3,11 @@ package org.maxwe.epub.typesetter.impl;
 import org.maxwe.epub.parser.core.IChapter;
 import org.maxwe.epub.parser.core.INavigation;
 import org.maxwe.epub.parser.impl.Chapter;
-import org.maxwe.epub.typesetter.core.IChapterTypesetter;
 import org.maxwe.epub.typesetter.core.APageTypesetter;
+import org.maxwe.epub.typesetter.core.IChapterTypesetter;
 import org.maxwe.epub.typesetter.core.ITypesetterListener;
 
 import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Created by Pengwei Ding on 2015-09-11 15:18.
@@ -22,6 +21,24 @@ public class ChapterTypesetter implements IChapterTypesetter {
     private int paragraphOffset;
     private int sectionOffset;
     private int offset;
+    private ITypesetterListener typesetterListener = new ITypesetterListener() {
+        public void onStart(IChapterTypesetter chapterTypesetter) {
+
+        }
+
+        public void onProgress(APageTypesetter pageTypesetter) {
+
+        }
+
+        public void onFinish(IChapterTypesetter chapterTypesetter) {
+
+        }
+
+        public void onError(Exception exception) {
+
+        }
+    };
+
     /**
      * 初始化当前章节的在读页面是负1，标示在读的页面还在上一个章节
      */
@@ -84,7 +101,7 @@ public class ChapterTypesetter implements IChapterTypesetter {
         this.offset = offset;
     }
 
-    public List<APageTypesetter> getPageTypesetters() {
+    public LinkedList<APageTypesetter> getPageTypesetters() {
         return this.pageTypesetters;
     }
 
@@ -93,17 +110,27 @@ public class ChapterTypesetter implements IChapterTypesetter {
     }
 
     public IChapterTypesetter typeset(int screenWidth, int screenHeight) {
+        this.typesetterListener.onStart(this);
         while (this.getParagraphOffset() < this.getChapter().getParagraphLength()) {
             APageTypesetter pageTypesetter = new PageTypesetter(0, 0, screenWidth, screenHeight);
             pageTypesetter.setIndex(this.pageTypesetters.size());
             pageTypesetter.typeset(this);
             this.pageTypesetters.add(pageTypesetter);
+            this.typesetterListener.onProgress(pageTypesetter);
         }
+        this.typesetterListener.onFinish(this);
         return this;
     }
 
-    public void setTypesetterListener(ITypesetterListener typesetterListener) {
+    public IChapterTypesetter typeset(int screenWidth, int screenHeight,ITypesetterListener typesetterListener) {
+        this.setTypesetterListener(typesetterListener);
+        return typeset(screenWidth,screenHeight);
+    }
 
+    public void setTypesetterListener(ITypesetterListener typesetterListener) {
+        if (typesetterListener != null){
+            this.typesetterListener = typesetterListener;
+        }
     }
 
     public void print() {
