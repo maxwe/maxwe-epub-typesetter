@@ -46,19 +46,17 @@ public class ChapterTypesetter implements IChapterTypesetter {
 
     private LinkedList<APageTypesetter> pageTypesetters = new LinkedList<APageTypesetter>();
 
-    public ChapterTypesetter(IChapter chapter) {
-        this.chapter = chapter;
-        this.title = this.chapter.getTitle();
-    }
+    private INavigation navigation;
 
     public ChapterTypesetter(INavigation navigation) throws Exception {
+        this.navigation = navigation;
         this.chapter = new Chapter(navigation.getHref());
         this.title = this.chapter.getTitle();
-        this.index = navigation.getIndex();
+        this.index = navigation.getPlayOrder();
     }
 
-    public String getChapterId() {
-        return this.chapter.getHref();
+    public String getId() {
+        return this.navigation.getId();
     }
 
     public String getTitle() {
@@ -70,7 +68,7 @@ public class ChapterTypesetter implements IChapterTypesetter {
     }
 
     public INavigation getNavigation() {
-        return null;
+        return this.navigation;
     }
 
     public IChapter getChapter() {

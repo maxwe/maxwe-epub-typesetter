@@ -1,13 +1,10 @@
 package org.maxwe.epub.typesetter;
 
-import org.maxwe.epub.parser.core.IChapter;
 import org.maxwe.epub.parser.core.IMetadata;
 import org.maxwe.epub.parser.core.INavigation;
 import org.maxwe.epub.parser.impl.Book;
-import org.maxwe.epub.parser.impl.Chapter;
 import org.maxwe.epub.typesetter.core.APageTypesetter;
 import org.maxwe.epub.typesetter.core.IChapterTypesetter;
-import org.maxwe.epub.typesetter.impl.ChapterTypesetter;
 import org.maxwe.epub.typesetter.impl.PageTypesetter;
 
 import java.io.File;
@@ -65,12 +62,12 @@ public class TypesetterTest {
             } else if (line.equals("2")) {
                 openChapter(book);
             } else {
-                IChapter iChapter = book.getContent().navigateTo(line);
-                if (iChapter == null){
-                    System.out.println("章节不存在");
-                }else {
-                    new ChapterTypesetter(iChapter).print();
-                }
+//                IChapter iChapter = book.getContent().navigateTo(line);
+//                if (iChapter == null){
+//                    System.out.println("章节不存在");
+//                }else {
+//                    new ChapterTypesetter(iChapter).print();
+//                }
             }
         }
     }
@@ -102,10 +99,10 @@ public class TypesetterTest {
                     System.out.println("输入错误");
                 } else {
                     try {
-                        LinkedList<APageTypesetter> pageTypesetters = typeset(new ChapterTypesetter(new Chapter(temp.getHref())));
-                        for (APageTypesetter pageTypesetter : pageTypesetters) {
-                            pageTypesetter.print();
-                        }
+//                        LinkedList<APageTypesetter> pageTypesetters = typeset(new ChapterTypesetter(new Chapter(temp.getHref())));
+//                        for (APageTypesetter pageTypesetter : pageTypesetters) {
+//                            pageTypesetter.print();
+//                        }
                     } catch (Exception e) {
                         System.out.println("解析图书异常" + e.getMessage());
                     }

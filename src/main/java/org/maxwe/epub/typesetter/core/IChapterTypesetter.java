@@ -15,6 +15,13 @@ import java.util.LinkedList;
 public interface IChapterTypesetter {
 
     /**
+     * 获取章节ID
+     * 既导航的ID
+     * @return
+     */
+    String getId();
+
+    /**
      * 获取章节的标题
      * @return
      */

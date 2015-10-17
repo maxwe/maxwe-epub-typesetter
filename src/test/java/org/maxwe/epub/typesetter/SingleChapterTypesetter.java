@@ -3,7 +3,6 @@ package org.maxwe.epub.typesetter;
 import junit.framework.TestCase;
 import org.junit.Test;
 import org.maxwe.epub.parser.impl.Book;
-import org.maxwe.epub.parser.impl.Chapter;
 import org.maxwe.epub.typesetter.core.APageTypesetter;
 import org.maxwe.epub.typesetter.core.IChapterTypesetter;
 import org.maxwe.epub.typesetter.core.ITypesetterListener;
@@ -63,7 +62,7 @@ public class SingleChapterTypesetter extends TestCase {
             System.out.println("############ 章节名：" + book.getContent().getNavigation(INDEX_OF_PLAIN_TEXT).getTitle() + "############");
             System.out.println("############ 章节位置：" + book.getContent().getNavigation(INDEX_OF_PLAIN_TEXT).getHref() + "############");
             long start = System.nanoTime();
-            IChapterTypesetter chapterTypesetter = new ChapterTypesetter(new Chapter(book.getContent().getNavigation(INDEX_OF_PLAIN_TEXT).getHref()));
+            IChapterTypesetter chapterTypesetter = new ChapterTypesetter(book.getContent().getNavigation(INDEX_OF_PLAIN_TEXT));
             LinkedList<APageTypesetter> pageTypesetters = chapterTypesetter.typeset(screenWidth,screenHeight,typesetterListener).getPageTypesetters();
             long duration = System.nanoTime() - start;
             DecimalFormat decimalFormat = new DecimalFormat("$,###");
@@ -94,7 +93,7 @@ public class SingleChapterTypesetter extends TestCase {
             System.out.println("############ 章节名：" + book.getContent().getNavigation(INDEX_OF_PLAIN_IMAGE).getTitle() + "############");
             System.out.println("############ 章节位置：" + book.getContent().getNavigation(INDEX_OF_PLAIN_IMAGE).getHref() + "############");
             long start = System.nanoTime();
-            IChapterTypesetter chapterTypesetter = new ChapterTypesetter(new Chapter(book.getContent().getNavigation(INDEX_OF_PLAIN_IMAGE).getHref()));
+            IChapterTypesetter chapterTypesetter = new ChapterTypesetter(book.getContent().getNavigation(INDEX_OF_PLAIN_IMAGE));
             LinkedList<APageTypesetter> pageTypesetters = chapterTypesetter.typeset(screenWidth,screenHeight,typesetterListener).getPageTypesetters();
             long duration = System.nanoTime() - start;
             DecimalFormat decimalFormat = new DecimalFormat("$,###");
@@ -125,7 +124,7 @@ public class SingleChapterTypesetter extends TestCase {
             System.out.println("############ 章节名：" + book.getContent().getNavigation(INDEX_OF_TEXT_IMAGE).getTitle() + "############");
             System.out.println("############ 章节位置：" + book.getContent().getNavigation(INDEX_OF_TEXT_IMAGE).getHref() + "############");
             long start = System.nanoTime();
-            IChapterTypesetter chapterTypesetter = new ChapterTypesetter(new Chapter(book.getContent().getNavigation(INDEX_OF_TEXT_IMAGE).getHref()));
+            IChapterTypesetter chapterTypesetter = new ChapterTypesetter(book.getContent().getNavigation(INDEX_OF_TEXT_IMAGE));
             LinkedList<APageTypesetter> pageTypesetters = chapterTypesetter.typeset(screenWidth,screenHeight,typesetterListener).getPageTypesetters();
             long duration = System.nanoTime() - start;
             DecimalFormat decimalFormat = new DecimalFormat("$,###");
@@ -158,7 +157,7 @@ public class SingleChapterTypesetter extends TestCase {
             System.out.println("############ 章节名：" + book.getContent().getNavigation(INDEX_OF_TEXT_AUDIO_VIDEO).getTitle() + "############");
             System.out.println("############ 章节位置：" + book.getContent().getNavigation(INDEX_OF_TEXT_AUDIO_VIDEO).getHref() + "############");
             long start = System.nanoTime();
-            IChapterTypesetter chapterTypesetter = new ChapterTypesetter(new Chapter(book.getContent().getNavigation(INDEX_OF_TEXT_AUDIO_VIDEO).getHref()));
+            IChapterTypesetter chapterTypesetter = new ChapterTypesetter(book.getContent().getNavigation(INDEX_OF_TEXT_AUDIO_VIDEO));
             LinkedList<APageTypesetter> pageTypesetters = chapterTypesetter.typeset(screenWidth,screenHeight,typesetterListener).getPageTypesetters();
             long duration = System.nanoTime() - start;
             DecimalFormat decimalFormat = new DecimalFormat("$,###");
