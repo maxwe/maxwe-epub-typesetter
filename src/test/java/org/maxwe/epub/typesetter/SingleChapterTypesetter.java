@@ -30,7 +30,7 @@ public class SingleChapterTypesetter extends TestCase {
         }
 
         public void onProgress(APageTypesetter pageTypesetter) {
-            System.out.println("=====" + pageTypesetter.getIndex() + "=====");
+            System.out.println("=====" + pageTypesetter.getIndexOfChapter() + "=====");
             pageTypesetter.print();
         }
 

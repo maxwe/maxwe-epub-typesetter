@@ -111,7 +111,7 @@ public class ChapterTypesetter implements IChapterTypesetter {
         this.typesetterListener.onStart(this);
         while (this.getParagraphOffset() < this.getChapter().getParagraphLength()) {
             APageTypesetter pageTypesetter = new PageTypesetter(0, 0, screenWidth, screenHeight);
-            pageTypesetter.setIndex(this.pageTypesetters.size());
+            pageTypesetter.setIndexOfChapter(this.pageTypesetters.size());
             pageTypesetter.typeset(this);
             this.pageTypesetters.add(pageTypesetter);
             this.typesetterListener.onProgress(pageTypesetter);

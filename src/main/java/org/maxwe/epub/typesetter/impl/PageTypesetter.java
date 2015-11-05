@@ -18,7 +18,8 @@ import java.util.LinkedList;
 public class PageTypesetter extends APageTypesetter {
 
     private String title;
-    private int index;
+    private int indexOfChapter;
+    private int indexOfAllChapter;
     private INavigation navigation;
 
     /**
@@ -52,12 +53,22 @@ public class PageTypesetter extends APageTypesetter {
         return this.title;
     }
 
-    public int getIndex() {
-        return this.index;
+    public int getIndexOfChapter() {
+        return this.indexOfChapter;
     }
 
-    public void setIndex(int index){
-        this.index = index;
+    public void setIndexOfChapter(int indexOfChapter){
+        this.indexOfChapter = indexOfChapter;
+    }
+
+    @Override
+    public int getIndexOfAllChapter() {
+        return indexOfAllChapter;
+    }
+
+    @Override
+    public void setIndexOfAllChapter(int indexOfAllChapter) {
+        this.indexOfAllChapter = indexOfAllChapter;
     }
 
     public int[] getEndPoint() {
@@ -125,7 +136,7 @@ public class PageTypesetter extends APageTypesetter {
 
     @Override
     public void print() {
-        System.out.println("==============分页线，页标题：" + this.getTitle() + ",页码："+ this.getIndex() +"=================");
+        System.out.println("==============分页线，页标题：" + this.getTitle() + ",页码："+ this.getIndexOfChapter() +"=================");
         for (AParagraphTypesetter paragraphTypesetter : this.paragraphTypesetters) {
             paragraphTypesetter.print();
         }
