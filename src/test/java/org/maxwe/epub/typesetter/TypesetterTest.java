@@ -1,8 +1,8 @@
 package org.maxwe.epub.typesetter;
 
+import org.maxwe.epub.parser.EPubParser;
 import org.maxwe.epub.parser.core.IMetadata;
 import org.maxwe.epub.parser.core.INavigation;
-import org.maxwe.epub.parser.impl.Book;
 import org.maxwe.epub.typesetter.core.APageTypesetter;
 import org.maxwe.epub.typesetter.core.IChapterTypesetter;
 import org.maxwe.epub.typesetter.impl.PageTypesetter;
@@ -42,9 +42,9 @@ public class TypesetterTest {
         }
     }
     private static void openBook(String filePath) throws Exception{
-        Book book;
+        EPubParser ePubParser;
         try {
-            book =new Book(filePath);
+            ePubParser =new EPubParser(filePath);
         } catch (Exception e) {
             System.out.println("解析图书异常" + e.getMessage());
             return;
@@ -57,10 +57,10 @@ public class TypesetterTest {
             if (line.equalsIgnoreCase("Q")) {
                 break;
             } else if (line.equals("1")) {
-                IMetadata metadata = book.getMetadata();
+                IMetadata metadata = ePubParser.getMetadata();
                 metadata.print();
             } else if (line.equals("2")) {
-                openChapter(book);
+                openChapter(ePubParser);
             } else {
 //                IChapter iChapter = book.getContent().navigateTo(line);
 //                if (iChapter == null){
@@ -72,7 +72,7 @@ public class TypesetterTest {
         }
     }
 
-    private static void openChapter(Book book) {
+    private static void openChapter(EPubParser book) {
         LinkedList<INavigation> navigations = book.getContent().getNavigation();
         for (INavigation navigation : navigations) {
             navigation.print();
