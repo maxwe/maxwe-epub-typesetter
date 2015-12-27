@@ -1,8 +1,11 @@
 package org.maxwe.epub.typesetter.impl;
 
 import org.maxwe.epub.typesetter.core.AChapter;
-import org.maxwe.epub.typesetter.core.AParagraph;
+import org.maxwe.epub.typesetter.core.APage;
 import org.maxwe.epub.typesetter.core.ASection;
+import org.maxwe.epub.typesetter.core.IMeta;
+
+import java.util.LinkedList;
 
 /**
  * Created by Pengwei Ding on 2015-12-26 19:19.
@@ -11,8 +14,13 @@ import org.maxwe.epub.typesetter.core.ASection;
  */
 public class TextSection extends ASection {
 
-    protected TextSection(AChapter chapter, AParagraph paragraph) {
-        super(chapter, paragraph);
+    protected TextSection(AChapter chapter, APage page) {
+        super(chapter, page);
+    }
+
+    @Override
+    public LinkedList<IMeta> getMetas() {
+        return null;
     }
 
     @Override
