@@ -10,23 +10,17 @@ public abstract class AMeta implements IMeta{
     private int startY;
     private int endX;
     private int endY;
-    private int screenWidth;
-    private int screenHeight;
-    private int startOffsetInSection;
-    private int endOffsetInSection;
+    private int offsetInSection;
     private String value;
 
     public AMeta() {}
 
-    public AMeta(int startX, int startY, int endX, int endY, int screenWidth, int screenHeight, int startOffsetInSection, int endOffsetInSection, String value) {
+    public AMeta(int startX, int startY, int endX, int endY,int offsetInSection, String value) {
         this.startX = startX;
         this.startY = startY;
         this.endX = endX;
         this.endY = endY;
-        this.screenWidth = screenWidth;
-        this.screenHeight = screenHeight;
-        this.startOffsetInSection = startOffsetInSection;
-        this.endOffsetInSection = endOffsetInSection;
+        this.offsetInSection = offsetInSection;
         this.value = value;
     }
 
@@ -63,40 +57,22 @@ public abstract class AMeta implements IMeta{
     }
 
     public int getScreenWidth() {
-        return screenWidth;
-    }
-
-    public void setScreenWidth(int screenWidth) {
-        this.screenWidth = screenWidth;
+        return this.getEndX() - this.getStartX();
     }
 
     public int getScreenHeight() {
-        return screenHeight;
+        return this.getEndY() - this.getStartY();
     }
 
-    public void setScreenHeight(int screenHeight) {
-        this.screenHeight = screenHeight;
+    public int getOffsetInSection() {
+        return offsetInSection;
     }
 
-    public int getStartOffsetInSection() {
-        return startOffsetInSection;
+    public void setOffsetInSection(int offsetInSection) {
+        this.offsetInSection = offsetInSection;
     }
 
-    public void setStartOffsetInSection(int startOffsetInSection) {
-        this.startOffsetInSection = startOffsetInSection;
+    public String getValue(){
+        return this.value;
     }
-
-    public int getEndOffsetInSection() {
-        return endOffsetInSection;
-    }
-
-    public void setEndOffsetInSection(int endOffsetInSection) {
-        this.endOffsetInSection = endOffsetInSection;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
-
-    public abstract String getValue();
 }

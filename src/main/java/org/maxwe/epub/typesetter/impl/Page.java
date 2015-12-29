@@ -9,27 +9,30 @@ import java.util.LinkedList;
 /**
  * Created by Pengwei Ding on 2015-12-26 16:45.
  * Email: www.dingpengwei@foxmail.com www.dingpegnwei@gmail.com
- * Description: 页面排版
+ * Description: 页面排版规则：只要章节中有段落没有排完就可以继续排下去，如果当页面还能排得下继续在当前页面排版，否则换个新页面继续排版
  * 边界控制条件有两个
  * 1：内容边界 在章节段落已经排版完成无论是否触及显示边界都应该终止该页面的排版
  * 2：显示边界 在显示边界外无论章节是否已经排版完成了整个章节都应该终止该页面的排版
  * 继续排版的条件就是同时满足上述两个条件
+ *
  */
 public class Page extends APage {
 
-    public Page(AChapter chapter) {
+    private LinkedList<IParagraph> paragraphs = new LinkedList<IParagraph>();
+
+    protected Page(AChapter chapter) {
         super(chapter);
     }
 
     @Override
     public LinkedList<IParagraph> getParagraphs() {
-        return null;
+        return this.paragraphs;
     }
 
     @Override
     protected APage typeset() {
-        int paragraphLength = this.getChapter().getChapter().getParagraphLength();
-        while (this.getStartX() < this.getScreenHeight() && this.getChapter().getCurrentTypesetterOffsetOnParagraph() < paragraphLength) {
+        int sunParagraphLength = this.getChapter().getParsedChapter().getParagraphLength();
+        while (this.getCursorY() < this.getEndY() && this.getChapter().getCurrentParagraphIndexInChapter() < sunParagraphLength) {
             Paragraph paragraph = new Paragraph(this.getChapter(),this);
             paragraph.typeset();
             this.getParagraphs().add(paragraph);

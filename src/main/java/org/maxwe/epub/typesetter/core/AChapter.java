@@ -3,142 +3,106 @@ package org.maxwe.epub.typesetter.core;
 import java.util.LinkedList;
 
 /**
- * Created by Pengwei Ding on 2015-12-26 16:14.
+ * Created by Pengwei Ding on 2015private int12private int26 16:14.
  * Email: www.dingpengwei@foxmail.com www.dingpegnwei@gmail.com
  * Description: 建议的段落排版实现
  */
-public abstract class AChapter implements IChapter{
-    /**
-     * 章节对应的文件路径
-     */
-    private String chapterFilePath;
-    /**
-     * 章节ID
-     */
+public abstract class AChapter implements IChapter {
+
+    private int startX;
+    private int startY;
+    private int endX;
+    private int endY;
+
     private String chapterId;
-    /**
-     * 章节名称
-     */
     private String chapterName;
-    /**
-     * 章节在图书中的顺序
-     */
-    private int indexInBook;
-    /**
-     * 章节排版后的页面
-     */
-    private LinkedList<IPage> pages = new LinkedList<IPage>();
+    private int chapterIndex;
 
+    private int currentParagraphIndexInChapter;
+    private int currentSectionIndexInParagraph;
+    private int currentMetaIndexInSection;
 
-    /**
-     * 有效的排版区域宽度
-     */
-    private int screenWidth;
+    private org.maxwe.epub.parser.core.IChapter parsedChapter;
 
-    /**
-     * 有效的排版区域高度
-     */
-    private int screenHeight;
-
-    /**
-     * 当前排版到的段落偏移量
-     */
-    private int currentTypesetterOffsetOnParagraph;
-    /**
-     * 当前排版到的片段偏移量
-     */
-    private int currentTypesetterOffsetOnSection;
-    /**
-     * 当前排版到的在片段中的偏移量
-     */
-    private int currentTypesetterOffsetInSection;
-
-    private org.maxwe.epub.parser.core.IChapter chapter;
-
-    protected AChapter(org.maxwe.epub.parser.core.IChapter chapter,int screenWidth,int screenHeight){
-        this.chapter = chapter;
-        this.chapterFilePath = chapter.getHref();
-        this.chapterId = chapter.getHref();
-        this.chapterName = chapter.getTitle();
+    public AChapter(org.maxwe.epub.parser.core.IChapter chapter, int startX, int startY, int endX, int endY) {
+        this.parsedChapter = chapter;
+        this.startX = startX;
+        this.startY = startY;
+        this.endX = endX;
+        this.endY = endY;
+        this.chapterId = this.parsedChapter.getHref();
+        this.chapterName = this.parsedChapter.getTitle();
         /**
-         * TODO 设置章节在图书中的顺序
+         * TODO 数据类型不一致
          */
-        //this.setIndexInBook(this.chapter.getIndex());
-        this.screenWidth = screenWidth;
-        this.screenHeight = screenHeight;
+        //this.chapterIndex = this.parsedChapter.getIndex();
     }
 
-    public String getChapterFilePath() {
-        return chapterFilePath;
+    public int getStartX() {
+        return startX;
+    }
+
+    public int getStartY() {
+        return startY;
+    }
+
+    public int getEndX() {
+        return endX;
+    }
+
+    public int getEndY() {
+        return endY;
+    }
+
+    public int getScreenWidth() {
+        return this.getEndX() - this.getStartX();
+    }
+
+    public int getScreenHeight() {
+        return this.getEndY() - this.getStartY();
     }
 
     public String getChapterId() {
         return chapterId;
     }
 
-    public void setChapterId(String chapterId) {
-        this.chapterId = chapterId;
-    }
-
     public String getChapterName() {
         return chapterName;
     }
 
-    public void setChapterName(String chapterName) {
-        this.chapterName = chapterName;
+    public int getChapterIndex() {
+        return chapterIndex;
     }
 
-    public int getIndexInBook() {
-        return indexInBook;
+    public int getCurrentParagraphIndexInChapter() {
+        return currentParagraphIndexInChapter;
     }
 
-    public void setIndexInBook(int indexInBook) {
-        this.indexInBook = indexInBook;
+    public void setCurrentParagraphIndexInChapter(int currentParagraphIndexInChapter) {
+        this.currentParagraphIndexInChapter = currentParagraphIndexInChapter;
     }
 
-    public LinkedList<IPage> getPages() {
-        return pages;
+    public int getCurrentSectionIndexInParagraph() {
+        return currentSectionIndexInParagraph;
     }
 
-    public void setPages(LinkedList<IPage> pages) {
-        this.pages = pages;
+    public void setCurrentSectionIndexInParagraph(int currentSectionIndexInParagraph) {
+        this.currentSectionIndexInParagraph = currentSectionIndexInParagraph;
     }
 
-    public int getScreenWidth() {
-        return screenWidth;
+    public int getCurrentMetaIndexInSection() {
+        return currentMetaIndexInSection;
     }
 
-    public int getScreenHeight() {
-        return screenHeight;
+    public void setCurrentMetaIndexInSection(int currentMetaIndexInSection) {
+        this.currentMetaIndexInSection = currentMetaIndexInSection;
     }
 
-    public int getCurrentTypesetterOffsetOnParagraph() {
-        return currentTypesetterOffsetOnParagraph;
+    public org.maxwe.epub.parser.core.IChapter getParsedChapter() {
+        return parsedChapter;
     }
 
-    public void setCurrentTypesetterOffsetOnParagraph(int currentTypesetterOffsetOnParagraph) {
-        this.currentTypesetterOffsetOnParagraph = currentTypesetterOffsetOnParagraph;
-    }
-
-    public int getCurrentTypesetterOffsetOnSection() {
-        return currentTypesetterOffsetOnSection;
-    }
-
-    public void setCurrentTypesetterOffsetOnSection(int currentTypesetterOffsetOnSection) {
-        this.currentTypesetterOffsetOnSection = currentTypesetterOffsetOnSection;
-    }
-
-    public int getCurrentTypesetterOffsetInSection() {
-        return currentTypesetterOffsetInSection;
-    }
-
-    public void setCurrentTypesetterOffsetInSection(int currentTypesetterOffsetInSection) {
-        this.currentTypesetterOffsetInSection = currentTypesetterOffsetInSection;
-    }
-
-    public org.maxwe.epub.parser.core.IChapter getChapter() {
-        return chapter;
-    }
+    public abstract LinkedList<IPage> getPages();
 
     protected abstract AChapter typeset();
 }

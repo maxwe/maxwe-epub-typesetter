@@ -13,8 +13,8 @@ public abstract class AParagraph implements IParagraph{
     private int startY;
     private int endX;
     private int endY;
-    private int screenWidth;
-    private int screenHeight;
+    private int cursorX;
+    private int cursorY;
 
     private int startOffsetInChapter;
     private int endOffsetInChapter;
@@ -26,6 +26,10 @@ public abstract class AParagraph implements IParagraph{
     public AParagraph(AChapter chapter,APage page){
         this.chapter = chapter;
         this.page = page;
+        this.cursorX = this.startX = this.chapter.getStartX();
+        this.cursorY = this.startY = this.chapter.getStartY();
+        this.endX = this.chapter.getEndX();
+        this.endY = this.chapter.getEndY();
     }
 
     public int getStartX() {
@@ -61,19 +65,27 @@ public abstract class AParagraph implements IParagraph{
     }
 
     public int getScreenWidth() {
-        return screenWidth;
-    }
-
-    public void setScreenWidth(int screenWidth) {
-        this.screenWidth = screenWidth;
+        return this.getEndX() - this.getStartX();
     }
 
     public int getScreenHeight() {
-        return screenHeight;
+        return this.getEndY() - this.getStartY();
     }
 
-    public void setScreenHeight(int screenHeight) {
-        this.screenHeight = screenHeight;
+    public int getCursorX() {
+        return cursorX;
+    }
+
+    public void setCursorX(int cursorX) {
+        this.cursorX = cursorX;
+    }
+
+    public int getCursorY() {
+        return cursorY;
+    }
+
+    public void setCursorY(int cursorY) {
+        this.cursorY = cursorY;
     }
 
     public int getStartOffsetInChapter() {

@@ -8,9 +8,7 @@ import org.maxwe.epub.typesetter.core.AMeta;
  * Description: @TODO
  */
 public class Word extends AMeta {
-
-    @Override
-    public String getValue() {
-        return null;
+    public Word(int startX, int startY, int endX, int endY, int offsetInSection, String value) {
+        super(startX, startY, endX, endY, offsetInSection, value);
     }
 }

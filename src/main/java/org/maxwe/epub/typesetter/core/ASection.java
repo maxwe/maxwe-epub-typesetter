@@ -13,11 +13,11 @@ public abstract class ASection implements ISection {
     private int startY;
     private int endX;
     private int endY;
-    private int screenWidth;
-    private int screenHeight;
+    private int cursorX;
+    private int cursorY;
 
-    private int startOffsetInSection;
-    private int endOffsetInSection;
+    private int startOffsetInParagraph;
+    private int endOffsetInParagraph;
     
     private AChapter chapter;
     private APage page;
@@ -25,6 +25,11 @@ public abstract class ASection implements ISection {
     protected ASection(AChapter chapter,APage page) {
         this.chapter = chapter;
         this.page = page;
+        this.cursorX = this.startX = this.chapter.getStartX();
+        this.cursorY = this.startY = this.chapter.getStartY();
+        this.endX = this.chapter.getEndX();
+        this.endY = this.chapter.getEndY();
+
     }
 
     public int getStartX() {
@@ -60,35 +65,43 @@ public abstract class ASection implements ISection {
     }
 
     public int getScreenWidth() {
-        return screenWidth;
-    }
-
-    public void setScreenWidth(int screenWidth) {
-        this.screenWidth = screenWidth;
+        return this.getEndX() - this.getStartX();
     }
 
     public int getScreenHeight() {
-        return screenHeight;
+        return this.getEndY() - this.getStartY();
     }
 
-    public void setScreenHeight(int screenHeight) {
-        this.screenHeight = screenHeight;
+    public int getCursorX() {
+        return cursorX;
     }
 
-    public int getStartOffsetInSection() {
-        return startOffsetInSection;
+    public void setCursorX(int cursorX) {
+        this.cursorX = cursorX;
     }
 
-    public void setStartOffsetInSection(int startOffsetInSection) {
-        this.startOffsetInSection = startOffsetInSection;
+    public int getCursorY() {
+        return cursorY;
     }
 
-    public int getEndOffsetInSection() {
-        return endOffsetInSection;
+    public void setCursorY(int cursorY) {
+        this.cursorY = cursorY;
     }
 
-    public void setEndOffsetInSection(int endOffsetInSection) {
-        this.endOffsetInSection = endOffsetInSection;
+    public int getStartOffsetInParagraph() {
+        return startOffsetInParagraph;
+    }
+
+    public void setStartOffsetInParagraph(int startOffsetInParagraph) {
+        this.startOffsetInParagraph = startOffsetInParagraph;
+    }
+
+    public int getEndOffsetInParagraph() {
+        return endOffsetInParagraph;
+    }
+
+    public void setEndOffsetInParagraph(int endOffsetInParagraph) {
+        this.endOffsetInParagraph = endOffsetInParagraph;
     }
 
     public AChapter getChapter() {

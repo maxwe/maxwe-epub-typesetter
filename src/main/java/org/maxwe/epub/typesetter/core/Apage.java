@@ -13,8 +13,6 @@ public abstract class APage implements IPage {
     private int startY;
     private int endX;
     private int endY;
-    private int screenWidth;
-    private int screenHeight;
 
     private String chapterId;
     private String chapterName;
@@ -29,84 +27,59 @@ public abstract class APage implements IPage {
     private int indexInChapter;
     private int indexInBook;
 
+    private int cursorX;
+    private int cursorY;
+
     private AChapter chapter;
 
     protected APage(AChapter chapter){
         this.chapter = chapter;
-        this.chapterId = chapter.getChapterId();
-        this.chapterName = chapter.getChapterName();
+        this.cursorX = this.startX = this.chapter.getStartX();
+        this.cursorY = this.startY = this.chapter.getStartY();
+        this.endX = this.chapter.getEndX();
+        this.endY = this.chapter.getEndY();
+        this.chapterId = this.chapter.getChapterId();
+        this.chapterName = this.chapter.getChapterName();
+        /**
+         * TODO 数据类型不一致
+         */
+        //this.chapterIndex = this.parsedChapter.getIndex();
     }
 
     public int getStartX() {
         return startX;
     }
 
-    public void setStartX(int startX) {
-        this.startX = startX;
-    }
-
     public int getStartY() {
         return startY;
-    }
-
-    public void setStartY(int startY) {
-        this.startY = startY;
     }
 
     public int getEndX() {
         return endX;
     }
 
-    public void setEndX(int endX) {
-        this.endX = endX;
-    }
-
     public int getEndY() {
         return endY;
     }
 
-    public void setEndY(int endY) {
-        this.endY = endY;
-    }
-
     public int getScreenWidth() {
-        return screenWidth;
-    }
-
-    public void setScreenWidth(int screenWidth) {
-        this.screenWidth = screenWidth;
+        return this.getEndX() - this.getStartX();
     }
 
     public int getScreenHeight() {
-        return screenHeight;
-    }
-
-    public void setScreenHeight(int screenHeight) {
-        this.screenHeight = screenHeight;
+        return this.getEndY() - this.getStartY();
     }
 
     public String getChapterId() {
         return chapterId;
     }
 
-    public void setChapterId(String chapterId) {
-        this.chapterId = chapterId;
-    }
-
     public String getChapterName() {
         return chapterName;
     }
 
-    public void setChapterName(String chapterName) {
-        this.chapterName = chapterName;
-    }
-
     public int getChapterIndex() {
         return chapterIndex;
-    }
-
-    public void setChapterIndex(int chapterIndex) {
-        this.chapterIndex = chapterIndex;
     }
 
     public int getStartParagraphIndexInChapter() {
@@ -171,6 +144,22 @@ public abstract class APage implements IPage {
 
     public void setIndexInBook(int indexInBook) {
         this.indexInBook = indexInBook;
+    }
+
+    public int getCursorX() {
+        return cursorX;
+    }
+
+    public void setCursorX(int cursorX) {
+        this.cursorX = cursorX;
+    }
+
+    public int getCursorY() {
+        return cursorY;
+    }
+
+    public void setCursorY(int cursorY) {
+        this.cursorY = cursorY;
     }
 
     public AChapter getChapter() {

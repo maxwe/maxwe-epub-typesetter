@@ -49,13 +49,7 @@ public interface IMeta {
      * 元数据在解析属性中的片段属性中的起始位置
      * @return
      */
-    int getStartOffsetInSection();
-    /**
-     * 解析属性操作
-     * 元数据在解析属性中的片段属性中的结束位置
-     * @return
-     */
-    int getEndOffsetInSection();
+    int getOffsetInSection();
 
     /**
      * 实际的数值字符
