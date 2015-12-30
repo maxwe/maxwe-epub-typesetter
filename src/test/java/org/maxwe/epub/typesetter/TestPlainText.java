@@ -12,7 +12,7 @@ import java.util.LinkedList;
  * Description: 纯文本排版
  */
 public class TestPlainText extends TestCase {
-    private final String path = SingleChapterTypesetter.class.getResource("/").getPath() + "sample/OEBPS/Text/ds00216103.xhtml";
+    private final String path = SingleChapterTypesetter.class.getResource("/").getPath() + "sample/OEBPS/Text/ds00216103_test.xhtml";
 
     private final int startX = 0;
     private final int startY = 0;
@@ -23,9 +23,7 @@ public class TestPlainText extends TestCase {
         org.maxwe.epub.parser.core.IChapter parserChapter = new org.maxwe.epub.parser.impl.Chapter(path);
         org.maxwe.epub.typesetter.core.IChapter chapter = new Chapter(parserChapter, startX, startY, endX, endY).typeset();
         LinkedList<IPage> pages = chapter.getPages();
-
         assertFalse(pages == null);
-
     }
 
 }

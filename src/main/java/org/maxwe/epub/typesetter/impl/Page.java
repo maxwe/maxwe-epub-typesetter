@@ -2,6 +2,7 @@ package org.maxwe.epub.typesetter.impl;
 
 import org.maxwe.epub.typesetter.core.AChapter;
 import org.maxwe.epub.typesetter.core.APage;
+import org.maxwe.epub.typesetter.core.AParagraph;
 import org.maxwe.epub.typesetter.core.IParagraph;
 
 import java.util.LinkedList;
@@ -31,11 +32,13 @@ public class Page extends APage {
 
     @Override
     protected APage typeset() {
-        int sunParagraphLength = this.getChapter().getParsedChapter().getParagraphLength();
-        while (this.getCursorY() < this.getEndY() && this.getChapter().getCurrentParagraphIndexInChapter() < sunParagraphLength) {
-            Paragraph paragraph = new Paragraph(this.getChapter(),this);
-            paragraph.typeset();
+        int paragraphLength = this.getChapter().getParsedChapter().getParagraphLength();
+        while (this.getCursorY() < this.getEndY() && this.getChapter().getCurrentParagraphIndexInChapter() < paragraphLength) {
+            AParagraph paragraph = new Paragraph(this.getChapter(),this).typeset();
             this.getParagraphs().add(paragraph);
+            if (this.getChapter().getCurrentParagraphIndexInChapter() >= paragraphLength){
+                break;
+            }
         }
         return this;
     }

@@ -41,12 +41,20 @@ public class Paragraph extends AParagraph {
             } else if (section instanceof Video) {
                 System.out.println("==========Video==========");
             }
-            this.sections.add(sectionTypesetter);
 
-            /**
-             * 把段落的游标设置位片段的游标
-             */
-            this.setCursorY(sectionTypesetter.getCursorY());
+            if (sectionTypesetter != null){
+                this.sections.add(sectionTypesetter);
+                if (this.getChapter().getCurrentSectionIndexInParagraph() >= sectionLength){
+                    /**
+                     * 段落中的片段已经排版完毕
+                     * 重置段落级别内部的游标
+                     * 并且使段落级别的游标向下游动一个单位
+                     */
+                    this.getChapter().setCurrentSectionIndexInParagraph(0);
+                    this.getChapter().setCurrentParagraphIndexInChapter(this.getChapter().getCurrentParagraphIndexInChapter() + 1);
+                    break;
+                }
+            }
         }
         return this;
     }
