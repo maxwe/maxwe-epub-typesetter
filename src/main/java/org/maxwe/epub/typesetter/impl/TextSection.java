@@ -9,6 +9,8 @@ import org.maxwe.epub.typesetter.core.IMeta;
 
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by Pengwei Ding on 2015-12-26 19:19.
@@ -38,7 +40,8 @@ public class TextSection extends ASection {
          */
         if (this.getPage().getCursorY() + Configer.CONFIGER_WORD_SIZE > this.getPage().getEndY()) {
             this.getPage().setCursorY(this.getPage().getEndY());
-            System.out.println("====预计这行代码根本不会执行====");
+            System.out.println("====这行代码不应该被执行--要检测原因====");
+            int a = 1 / 0;
             return null;
         }
 
@@ -54,7 +57,7 @@ public class TextSection extends ASection {
          * 1：超出屏幕排版区域范围
          * 2：超出内容排版区域范围
          */
-        while (this.getCursorY() + Configer.CONFIGER_WORD_SIZE <= this.getEndY() && metaOffset < metaLength) {
+        while (this.getPage().getCursorY() + Configer.CONFIGER_WORD_SIZE <= this.getEndY() && metaOffset < metaLength) {
 
             /**
              * 行存储
@@ -67,10 +70,10 @@ public class TextSection extends ASection {
              * 1：超出排版区域范围
              * 2：超出排版内容范围
              */
-            while (this.getCursorX() + Configer.CONFIGER_WORD_SIZE <= this.getEndX() && metaOffset < metaLength) {
+            while (this.getPage().getCursorX() + Configer.CONFIGER_WORD_SIZE <= this.getEndX() && metaOffset < metaLength) {
                 String word = textSection.getWord(metaOffset);
-                lineWords.put(this.getCursorX(), word);
-                this.metas.add(new Word(this.getCursorX(),this.getCursorY(),0,0,metaOffset,word));
+                lineWords.put(this.getPage().getCursorX(), word);
+                this.metas.add(new Word(this.getPage().getCursorX(), this.getPage().getCursorY(), 0, 0, metaOffset, word));
                 /**
                  * 修改片段级别的偏移量
                  */
@@ -88,7 +91,7 @@ public class TextSection extends ASection {
              */
             this.getPage().setCursorX(this.getPage().getStartX());
 
-            if (lineWords.size() > 0){
+            if (lineWords.size() > 0) {
                 this.words.put(this.getPage().getCursorY(), lineWords);
             }
 
@@ -111,6 +114,25 @@ public class TextSection extends ASection {
             this.getChapter().setCurrentMetaIndexInSection(0);
             this.getChapter().setCurrentSectionIndexInParagraph(this.getChapter().getCurrentSectionIndexInParagraph() + 1);
         }
+
+        this.setEndX(this.getPage().getEndX());
+        this.setEndY(this.getPage().getCursorY());
+
         return this;
+    }
+
+    public void print() {
+        Set<Map.Entry<Integer, LinkedHashMap<Integer, String>>> lineEntries = this.words.entrySet();
+        for (Map.Entry<Integer, LinkedHashMap<Integer, String>> lineEntry : lineEntries) {
+            Integer lineY = lineEntry.getKey();
+            LinkedHashMap<Integer, String> lineValue = lineEntry.getValue();
+            Set<Map.Entry<Integer, String>> entries = lineValue.entrySet();
+            for (Map.Entry<Integer, String> entry : entries) {
+                Integer key = entry.getKey();
+                String value = entry.getValue();
+                System.out.print(value + "{" + String.format("% 4d", key) + "," + String.format("% 4d", lineY) + "} ");
+            }
+            System.out.println("");
+        }
     }
 }

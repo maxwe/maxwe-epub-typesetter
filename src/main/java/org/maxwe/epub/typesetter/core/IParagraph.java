@@ -64,4 +64,6 @@ public interface IParagraph {
      * @return
      */
     LinkedList<ISection> getSections();
+
+    void print();
 }

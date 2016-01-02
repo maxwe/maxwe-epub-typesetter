@@ -118,4 +118,6 @@ public interface IPage {
      * @return
      */
     LinkedList<IParagraph> getParagraphs();
+
+    void print();
 }

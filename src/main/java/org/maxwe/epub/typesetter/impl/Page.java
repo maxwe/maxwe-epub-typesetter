@@ -42,4 +42,10 @@ public class Page extends APage {
         }
         return this;
     }
+
+    public void print() {
+        for (IParagraph paragraph:paragraphs){
+            paragraph.print();
+        }
+    }
 }

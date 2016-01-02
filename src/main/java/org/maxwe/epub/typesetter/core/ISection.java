@@ -65,4 +65,6 @@ public interface ISection {
      * @return
      */
     LinkedList<IMeta> getMetas();
+
+    void print();
 }

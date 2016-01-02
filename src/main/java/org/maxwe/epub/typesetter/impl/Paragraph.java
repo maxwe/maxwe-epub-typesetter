@@ -56,6 +56,15 @@ public class Paragraph extends AParagraph {
                 }
             }
         }
+        this.setEndX(this.getPage().getEndX());
+        this.setEndX(this.getPage().getCursorY());
+
         return this;
+    }
+
+    public void print() {
+        for (ISection section:sections){
+            section.print();
+        }
     }
 }

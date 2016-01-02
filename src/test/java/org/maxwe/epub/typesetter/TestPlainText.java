@@ -24,6 +24,9 @@ public class TestPlainText extends TestCase {
         org.maxwe.epub.typesetter.core.IChapter chapter = new Chapter(parserChapter, startX, startY, endX, endY).typeset();
         LinkedList<IPage> pages = chapter.getPages();
         assertFalse(pages == null);
-    }
 
+        for (IPage page:pages){
+            page.print();
+        }
+    }
 }
