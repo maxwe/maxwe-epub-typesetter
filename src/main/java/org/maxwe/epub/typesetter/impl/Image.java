@@ -8,8 +8,7 @@ import org.maxwe.epub.typesetter.core.AMeta;
  * Description: @TODO
  */
 public class Image extends AMeta {
-    @Override
-    public String getValue() {
-        return null;
+    public Image(int startX, int startY, int endX, int endY, int offsetInSection, String value) {
+        super(startX, startY, endX, endY, offsetInSection, value);
     }
 }

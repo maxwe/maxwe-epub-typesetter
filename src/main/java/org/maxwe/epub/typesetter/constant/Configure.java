@@ -5,7 +5,7 @@ package org.maxwe.epub.typesetter.constant;
  * Email: www.dingpengwei@foxmail.com www.dingpegnwei@gmail.com
  * Description: @TODO
  */
-public class Configer {
+public class Configure {
 
     /**
      * 行间距

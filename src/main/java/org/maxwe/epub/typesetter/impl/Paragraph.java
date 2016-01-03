@@ -35,11 +35,11 @@ public class Paragraph extends AParagraph {
             if (section instanceof Text) {
                 sectionTypesetter = new TextSection(this.getChapter(), this.getPage()).typeset();
             } else if (section instanceof org.maxwe.epub.parser.impl.Image) {
-                System.out.println("==========Image==========");
+                sectionTypesetter = new ImageSection(this.getChapter(), this.getPage()).typeset();
             } else if (section instanceof Audio) {
-                System.out.println("==========Audio==========");
+                sectionTypesetter = new AudioSection(this.getChapter(), this.getPage()).typeset();
             } else if (section instanceof Video) {
-                System.out.println("==========Video==========");
+                sectionTypesetter = new VideoSection(this.getChapter(), this.getPage()).typeset();
             }
 
             if (sectionTypesetter != null){

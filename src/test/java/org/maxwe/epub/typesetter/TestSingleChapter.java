@@ -11,7 +11,7 @@ import java.util.LinkedList;
  * Email: www.dingpengwei@foxmail.com www.dingpegnwei@gmail.com
  * Description: 纯文本排版
  */
-public class TestPlainText extends TestCase {
+public class TestSingleChapter extends TestCase {
     private final String path = SingleChapterTypesetter.class.getResource("/").getPath() + "sample/OEBPS/Text/ds00216103_test.xhtml";
 
     private final int startX = 0;
@@ -19,7 +19,7 @@ public class TestPlainText extends TestCase {
     private final int endX = 320;
     private final int endY = 480;
 
-    public void testPlainText() throws Exception{
+    public void test() throws Exception{
         org.maxwe.epub.parser.core.IChapter parserChapter = new org.maxwe.epub.parser.impl.Chapter(path);
         org.maxwe.epub.typesetter.core.IChapter chapter = new Chapter(parserChapter, startX, startY, endX, endY).typeset();
         LinkedList<IPage> pages = chapter.getPages();

@@ -2,7 +2,7 @@ package org.maxwe.epub.typesetter.impl;
 
 import org.maxwe.epub.parser.core.ISection;
 import org.maxwe.epub.parser.impl.Text;
-import org.maxwe.epub.typesetter.constant.Configer;
+import org.maxwe.epub.typesetter.constant.Configure;
 import org.maxwe.epub.typesetter.core.IChapterTypesetter;
 
 import java.util.LinkedHashMap;
@@ -33,14 +33,14 @@ public class TextTypesetter extends ASectionTypesetter {
          * 行排版
          * 终止条件1：超出排版区域范围；2：超出排版内容范围
          */
-        while (this.currentY + Configer.CONFIGER_WORD_SIZE <= this.endY && currentOffset < originLength) {
+        while (this.currentY + Configure.CONFIGER_WORD_SIZE <= this.endY && currentOffset < originLength) {
             LinkedHashMap<Integer, String> lineWords = new LinkedHashMap<Integer, String>();
             /**
              * 列排版
              * 即行间排版
              * 终止条件1：超出排版区域范围；2：超出排版内容范围
              */
-            while (this.currentX + Configer.CONFIGER_WORD_SIZE <= this.endX && currentOffset < originLength) {
+            while (this.currentX + Configure.CONFIGER_WORD_SIZE <= this.endX && currentOffset < originLength) {
                 String word = text.getWord(currentOffset);
                 lineWords.put(this.currentX, word);
                 /**
@@ -54,7 +54,7 @@ public class TextTypesetter extends ASectionTypesetter {
                 /**
                  * X轴坐标的移动：当前字的位置+单个文字所占用大小+字间距=下一个字的位置
                  */
-                this.currentX = this.currentX + Configer.CONFIGER_WORD_SIZE + Configer.CONFIGER_WORD_SPACING;
+                this.currentX = this.currentX + Configure.CONFIGER_WORD_SIZE + Configure.CONFIGER_WORD_SPACING;
             }
 
             this.currentX = this.startX;
@@ -62,7 +62,7 @@ public class TextTypesetter extends ASectionTypesetter {
             /**
              * Y轴坐标的一定：当前行的位置+单个文字所占用的大小+行间距=下一行的位置
              */
-            this.currentY = this.currentY + Configer.CONFIGER_WORD_SIZE + Configer.CONFIGER_LINE_SPACING;
+            this.currentY = this.currentY + Configure.CONFIGER_WORD_SIZE + Configure.CONFIGER_LINE_SPACING;
 
             /**
              * 上层的排版依据的是在页面范围之内的排版才能添加到排版集合中
@@ -76,7 +76,7 @@ public class TextTypesetter extends ASectionTypesetter {
         /**
          *  避免初始值过大造成的死循环
          */
-        if (this.currentY + Configer.CONFIGER_WORD_SIZE > this.endY){
+        if (this.currentY + Configure.CONFIGER_WORD_SIZE > this.endY){
             this.currentY = this.endY;
         }
 
