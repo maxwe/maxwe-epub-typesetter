@@ -12,7 +12,7 @@ import java.util.LinkedList;
  * Description: 纯文本排版
  */
 public class TestSingleChapter extends TestCase {
-    private final String path = SingleChapterTypesetter.class.getResource("/").getPath() + "sample/OEBPS/Text/ds00216103_test.xhtml";
+    private final String path = TestSingleChapter.class.getResource("/").getPath() + "sample/OEBPS/Text/ds00216103_test.xhtml";
 
     private final int startX = 0;
     private final int startY = 0;
