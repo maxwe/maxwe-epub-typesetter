@@ -1,6 +1,7 @@
 package org.maxwe.epub.typesetter;
 
 import junit.framework.TestCase;
+import org.maxwe.epub.typesetter.core.IChapter;
 import org.maxwe.epub.typesetter.core.IPage;
 import org.maxwe.epub.typesetter.impl.Chapter;
 
@@ -21,7 +22,19 @@ public class TestSingleChapter extends TestCase {
 
     public void test() throws Exception{
         org.maxwe.epub.parser.core.IChapter parserChapter = new org.maxwe.epub.parser.impl.Chapter(path);
-        org.maxwe.epub.typesetter.core.IChapter chapter = new Chapter(parserChapter, startX, startY, endX, endY).typeset();
+        org.maxwe.epub.typesetter.core.IChapter chapter = new Chapter(parserChapter, startX, startY, endX, endY).setChapterTypesetListener(new Chapter.ChapterTypesetListener() {
+            public void onChapterTypesetStart(IChapter chapter) {
+                System.out.println("章节：《" + chapter.getChapterName() + "》排版开始");
+            }
+
+            public void onPageTypesetOver(IChapter chapter, int indexInChapter) {
+                System.out.println("章节：《" + chapter.getChapterName() + "》排版到第" + indexInChapter + "页");
+            }
+
+            public void onChapterTypesetEnd(IChapter chapter) {
+                System.out.println("章节：《" + chapter.getChapterName() + "》排版结束，共有" + chapter.getPages().size() + "页");
+            }
+        }).typeset();
         LinkedList<IPage> pages = chapter.getPages();
         assertFalse(pages == null);
 

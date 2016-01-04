@@ -13,11 +13,27 @@ import java.util.LinkedList;
  */
 public class Chapter extends AChapter {
 
+    private ChapterTypesetListener chapterTypesetListener = new ChapterTypesetListener() {
+        public void onChapterTypesetStart(org.maxwe.epub.typesetter.core.IChapter chapter) {
+
+        }
+
+        public void onPageTypesetOver(org.maxwe.epub.typesetter.core.IChapter chapter, int indexInChapter) {
+
+        }
+
+        public void onChapterTypesetEnd(org.maxwe.epub.typesetter.core.IChapter chapter) {
+
+        }
+    };
+
     private LinkedList<IPage> pages = new LinkedList<IPage>();
 
     public Chapter(IChapter chapter, int startX, int startY, int endX, int endY) {
         super(chapter, startX, startY, endX, endY);
     }
+
+
 
     @Override
     public LinkedList<IPage> getPages() {
@@ -26,11 +42,27 @@ public class Chapter extends AChapter {
 
     @Override
     public AChapter typeset() {
+        this.chapterTypesetListener.onChapterTypesetStart(this);
         while (this.getCurrentParagraphIndexInChapter() < this.getParsedChapter().getParagraphLength()) {
             Page page = new Page(this);
             page.typeset();
             this.pages.add(page);
+            this.chapterTypesetListener.onPageTypesetOver(this, this.pages.size());
+        }
+        this.chapterTypesetListener.onChapterTypesetEnd(this);
+        return this;
+    }
+
+    public Chapter setChapterTypesetListener(ChapterTypesetListener chapterTypesetListener) {
+        if (chapterTypesetListener != null){
+            this.chapterTypesetListener = chapterTypesetListener;
         }
         return this;
+    }
+
+    public interface ChapterTypesetListener{
+        void onChapterTypesetStart(org.maxwe.epub.typesetter.core.IChapter chapter);
+        void onPageTypesetOver(org.maxwe.epub.typesetter.core.IChapter chapter,int indexInChapter);
+        void onChapterTypesetEnd(org.maxwe.epub.typesetter.core.IChapter chapter);
     }
 }
