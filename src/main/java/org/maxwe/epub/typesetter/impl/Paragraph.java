@@ -15,8 +15,9 @@ import java.util.LinkedList;
  */
 public class Paragraph extends AParagraph {
     private LinkedList<ISection> sections = new LinkedList<ISection>();
+
     public Paragraph(AChapter chapter, APage page) {
-        super(chapter,page);
+        super(chapter, page);
     }
 
     @Override
@@ -42,9 +43,9 @@ public class Paragraph extends AParagraph {
                 sectionTypesetter = new VideoSection(this.getChapter(), this.getPage()).typeset();
             }
 
-            if (sectionTypesetter != null){
+            if (sectionTypesetter != null) {
                 this.sections.add(sectionTypesetter);
-                if (this.getChapter().getCurrentSectionIndexInParagraph() >= sectionLength){
+                if (this.getChapter().getCurrentSectionIndexInParagraph() >= sectionLength) {
                     /**
                      * 段落中的片段已经排版完毕
                      * 重置段落级别内部的游标
@@ -53,6 +54,8 @@ public class Paragraph extends AParagraph {
                     this.getChapter().setCurrentSectionIndexInParagraph(0);
                     this.getChapter().setCurrentParagraphIndexInChapter(this.getChapter().getCurrentParagraphIndexInChapter() + 1);
                     break;
+                } else {
+                    this.getChapter().setCurrentMetaIndexInSection(this.getChapter().getCurrentMetaIndexInSection() + 1);
                 }
             }
         }
@@ -63,7 +66,7 @@ public class Paragraph extends AParagraph {
     }
 
     public void print() {
-        for (ISection section:sections){
+        for (ISection section : sections) {
             section.print();
         }
     }

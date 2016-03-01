@@ -38,12 +38,11 @@ public class TextSection extends ASection {
          *  这个时候应该返回为null，上层调用处理值为null的情况
          *  一旦发生这个情况，应把页面的游标Y指向Y的最大值
          */
-        if (this.getPage().getCursorY() + Configure.CONFIGER_WORD_SIZE > this.getPage().getEndY()) {
-            this.getPage().setCursorY(this.getPage().getEndY());
-            System.out.println("====这行代码不应该被执行--要检测原因====");
-            int a = 1 / 0;
-            return null;
-        }
+//        if (this.getPage().getCursorY() + Configure.CONFIGER_WORD_SIZE > this.getPage().getEndY()) {
+//            this.getPage().setCursorY(this.getPage().getEndY());
+//            System.out.println("====这行代码不应该被执行--要检测原因====");
+//            return null;
+//        }
 
         int paragraphOffset = this.getChapter().getCurrentParagraphIndexInChapter();
         int sectionOffset = this.getChapter().getCurrentSectionIndexInParagraph();
@@ -58,7 +57,6 @@ public class TextSection extends ASection {
          * 2：超出内容排版区域范围
          */
         while (this.getPage().getCursorY() + Configure.CONFIGER_WORD_SIZE <= this.getEndY() && metaOffset < metaLength) {
-
             /**
              * 行存储
              */

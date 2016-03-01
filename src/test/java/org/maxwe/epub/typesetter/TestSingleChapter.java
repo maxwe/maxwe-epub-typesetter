@@ -39,6 +39,7 @@ public class TestSingleChapter extends TestCase {
         assertFalse(pages == null);
 
         for (IPage page:pages){
+            System.out.println("===================="+ page.getChapterName()+"====================");
             page.print();
         }
     }
