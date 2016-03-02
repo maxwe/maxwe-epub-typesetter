@@ -1,6 +1,7 @@
 package org.maxwe.epub.typesetter.impl;
 
 import org.maxwe.epub.parser.core.IChapter;
+import org.maxwe.epub.typesetter.Configure;
 import org.maxwe.epub.typesetter.core.AChapter;
 import org.maxwe.epub.typesetter.core.IPage;
 
@@ -29,8 +30,8 @@ public class Chapter extends AChapter {
 
     private LinkedList<IPage> pages = new LinkedList<IPage>();
 
-    public Chapter(IChapter chapter, int startX, int startY, int endX, int endY) {
-        super(chapter, startX, startY, endX, endY);
+    public Chapter(IChapter chapter,Configure configure, int startX, int startY, int endX, int endY) {
+        super(chapter, configure,startX, startY, endX, endY);
     }
 
 
@@ -44,7 +45,7 @@ public class Chapter extends AChapter {
     public AChapter typeset() {
         this.chapterTypesetListener.onChapterTypesetStart(this);
         while (this.getCurrentParagraphIndexInChapter() < this.getParsedChapter().getParagraphLength()) {
-            Page page = new Page(this);
+            Page page = new Page(this,this.getConfigure());
             page.typeset();
             this.pages.add(page);
             this.chapterTypesetListener.onPageTypesetOver(this, this.pages.size());
@@ -65,4 +66,6 @@ public class Chapter extends AChapter {
         void onPageTypesetOver(org.maxwe.epub.typesetter.core.IChapter chapter,int indexInChapter);
         void onChapterTypesetEnd(org.maxwe.epub.typesetter.core.IChapter chapter);
     }
+
+
 }

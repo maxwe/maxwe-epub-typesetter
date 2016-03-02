@@ -21,8 +21,9 @@ public class TestSingleChapter extends TestCase {
     private final int endY = 480;
 
     public void test() throws Exception{
+        Configure configure = new Configure(0, 0, 0, 0);
         org.maxwe.epub.parser.core.IChapter parserChapter = new org.maxwe.epub.parser.impl.Chapter(path);
-        org.maxwe.epub.typesetter.core.IChapter chapter = new Chapter(parserChapter, startX, startY, endX, endY).setChapterTypesetListener(new Chapter.ChapterTypesetListener() {
+        org.maxwe.epub.typesetter.core.IChapter chapter = new Chapter(parserChapter, configure,startX, startY, endX, endY).setChapterTypesetListener(new Chapter.ChapterTypesetListener() {
             public void onChapterTypesetStart(IChapter chapter) {
                 System.out.println("章节：《" + chapter.getChapterName() + "》排版开始");
             }

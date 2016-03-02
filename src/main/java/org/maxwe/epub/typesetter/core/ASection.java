@@ -97,4 +97,9 @@ public abstract class ASection implements ISection {
     public abstract LinkedList<IMeta> getMetas();
 
     protected abstract ASection typeset();
+
+    public void print() {
+        System.out.println("本片段信息：页面坐标起始点= {" + this.getStartX() + " ," + this.getStartY() + "} ,页面坐标结束点= {" + this.getEndX() + " ," + this.getEndY()
+                + "} ,片段偏移起始坐标= {" + this.getStartOffsetInParagraph() + "} ,片段偏移结束坐标= {" + this.getEndOffsetInParagraph() + "}");
+    }
 }

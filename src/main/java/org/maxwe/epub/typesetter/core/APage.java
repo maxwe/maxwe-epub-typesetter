@@ -1,5 +1,7 @@
 package org.maxwe.epub.typesetter.core;
 
+import org.maxwe.epub.typesetter.Configure;
+
 import java.util.LinkedList;
 
 /**
@@ -31,19 +33,17 @@ public abstract class APage implements IPage {
     private int cursorY;
 
     private AChapter chapter;
-
-    protected APage(AChapter chapter){
+    private Configure configure;
+    protected APage(AChapter chapter,Configure configure){
         this.chapter = chapter;
+        this.configure = configure;
         this.cursorX = this.startX = this.chapter.getStartX();
         this.cursorY = this.startY = this.chapter.getStartY();
         this.endX = this.chapter.getEndX();
         this.endY = this.chapter.getEndY();
         this.chapterId = this.chapter.getChapterId();
         this.chapterName = this.chapter.getChapterName();
-        /**
-         * TODO 数据类型不一致
-         */
-        //this.chapterIndex = this.parsedChapter.getIndex();
+        this.chapterIndex = this.chapter.getChapterIndex();
     }
 
     public int getStartX() {
@@ -167,6 +167,10 @@ public abstract class APage implements IPage {
     }
 
     public abstract LinkedList<IParagraph> getParagraphs();
+
+    public Configure getConfigure() {
+        return configure;
+    }
 
     protected abstract APage typeset();
 }

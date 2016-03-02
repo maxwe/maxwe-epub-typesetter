@@ -1,5 +1,7 @@
 package org.maxwe.epub.typesetter.core;
 
+import org.maxwe.epub.typesetter.Configure;
+
 import java.util.LinkedList;
 
 /**
@@ -23,19 +25,17 @@ public abstract class AChapter implements IChapter {
     private int currentMetaIndexInSection;
 
     private org.maxwe.epub.parser.core.IChapter parsedChapter;
-
-    public AChapter(org.maxwe.epub.parser.core.IChapter chapter, int startX, int startY, int endX, int endY) {
+    private Configure configure;
+    public AChapter(org.maxwe.epub.parser.core.IChapter chapter,Configure configure, int startX, int startY, int endX, int endY) {
         this.parsedChapter = chapter;
+        this.configure = configure;
         this.startX = startX;
         this.startY = startY;
         this.endX = endX;
         this.endY = endY;
         this.chapterId = this.parsedChapter.getHref();
         this.chapterName = this.parsedChapter.getTitle();
-        /**
-         * TODO 数据类型不一致
-         */
-        //this.chapterIndex = this.parsedChapter.getIndex();
+        this.chapterIndex = this.parsedChapter.getIndex();
     }
 
     public int getStartX() {
@@ -103,6 +103,10 @@ public abstract class AChapter implements IChapter {
     }
 
     public abstract LinkedList<IPage> getPages();
+
+    public Configure getConfigure() {
+        return configure;
+    }
 
     protected abstract AChapter typeset();
 }

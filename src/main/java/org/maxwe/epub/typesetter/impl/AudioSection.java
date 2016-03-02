@@ -43,6 +43,7 @@ public class AudioSection extends ASection {
     }
 
     public void print() {
+        super.print();
         for (int i = 0; i < 10; i++) {
             if (i==5){
                 System.out.println("音频区域");

@@ -1,5 +1,6 @@
 package org.maxwe.epub.typesetter.impl;
 
+import org.maxwe.epub.typesetter.Configure;
 import org.maxwe.epub.typesetter.core.AChapter;
 import org.maxwe.epub.typesetter.core.APage;
 import org.maxwe.epub.typesetter.core.AParagraph;
@@ -20,9 +21,8 @@ import java.util.LinkedList;
 public class Page extends APage {
 
     private LinkedList<IParagraph> paragraphs = new LinkedList<IParagraph>();
-
-    protected Page(AChapter chapter) {
-        super(chapter);
+    protected Page(AChapter chapter,Configure configure) {
+        super(chapter,configure);
     }
 
     @Override
@@ -44,6 +44,10 @@ public class Page extends APage {
     }
 
     public void print() {
+        System.out.println("本页信息：章节名称= " + this.getChapterName()
+                + " ,四维坐标起始={" + this.getChapterIndex() + " ," + this.getStartParagraphIndexInChapter() + " ," + this.getStartSectionIndexInParagraph() +" ," + this.getStartMetaIndexInSection()
+                + "} ,四维坐标结束={" + this.getChapterIndex() + " ," + this.getEndParagraphIndexInChapter() + " ," + this.getEndSectionInParagraph() + " ," + this.getEndMetaIndexInSection()
+                + "},页面坐标起始点= {" + this.getStartX() + " ," + this.getStartY() + "} ,页面坐标结束点= {" + this.getEndX() + " ," + this.getEndY() + "}");
         for (IParagraph paragraph:paragraphs){
             paragraph.print();
         }

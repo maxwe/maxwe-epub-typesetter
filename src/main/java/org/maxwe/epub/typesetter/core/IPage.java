@@ -1,5 +1,7 @@
 package org.maxwe.epub.typesetter.core;
 
+import org.maxwe.epub.typesetter.Configure;
+
 import java.util.LinkedList;
 
 /**
@@ -118,6 +120,8 @@ public interface IPage {
      * @return
      */
     LinkedList<IParagraph> getParagraphs();
+
+    Configure getConfigure();
 
     void print();
 }

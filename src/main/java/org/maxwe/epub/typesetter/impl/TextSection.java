@@ -1,7 +1,6 @@
 package org.maxwe.epub.typesetter.impl;
 
 import org.maxwe.epub.parser.impl.Text;
-import org.maxwe.epub.typesetter.constant.Configure;
 import org.maxwe.epub.typesetter.core.AChapter;
 import org.maxwe.epub.typesetter.core.APage;
 import org.maxwe.epub.typesetter.core.ASection;
@@ -56,7 +55,7 @@ public class TextSection extends ASection {
          * 1：超出屏幕排版区域范围
          * 2：超出内容排版区域范围
          */
-        while (this.getPage().getCursorY() + Configure.CONFIGER_WORD_SIZE <= this.getEndY() && metaOffset < metaLength) {
+        while (this.getPage().getCursorY() + this.getPage().getConfigure().getFontSize() <= this.getEndY() && metaOffset < metaLength) {
             /**
              * 行存储
              */
@@ -68,7 +67,7 @@ public class TextSection extends ASection {
              * 1：超出排版区域范围
              * 2：超出排版内容范围
              */
-            while (this.getPage().getCursorX() + Configure.CONFIGER_WORD_SIZE <= this.getEndX() && metaOffset < metaLength) {
+            while (this.getPage().getCursorX() + this.getPage().getConfigure().getFontSize() <= this.getEndX() && metaOffset < metaLength) {
                 String word = textSection.getWord(metaOffset);
                 lineWords.put(this.getPage().getCursorX(), word);
                 this.metas.add(new Word(this.getPage().getCursorX(), this.getPage().getCursorY(), 0, 0, metaOffset, word));
@@ -79,7 +78,7 @@ public class TextSection extends ASection {
                 /**
                  * X轴坐标的移动：当前字的位置+单个文字所占用大小+字间距=下一个字的位置
                  */
-                this.getPage().setCursorX(this.getPage().getCursorX() + Configure.CONFIGER_WORD_SIZE + Configure.CONFIGER_WORD_SPACING);
+                this.getPage().setCursorX(this.getPage().getCursorX() + this.getPage().getConfigure().getFontSize() + this.getPage().getConfigure().getFontSpace());
             }
 
             /**
@@ -96,10 +95,10 @@ public class TextSection extends ASection {
             /**
              * Y轴坐标的一定：当前行的位置+单个文字所占用的大小+行间距=下一行的位置
              */
-            this.getPage().setCursorY(this.getPage().getCursorY() + Configure.CONFIGER_WORD_SIZE + Configure.CONFIGER_LINE_SPACING);
+            this.getPage().setCursorY(this.getPage().getCursorY() + this.getPage().getConfigure().getFontSize() + this.getPage().getConfigure().getLineSpace());
         }
 
-        if (this.getPage().getCursorY() + Configure.CONFIGER_WORD_SIZE > this.getPage().getEndY()) {
+        if (this.getPage().getCursorY() + this.getPage().getConfigure().getFontSize() > this.getPage().getEndY()) {
             this.getPage().setCursorY(this.getPage().getEndY());
         }
 
@@ -120,6 +119,7 @@ public class TextSection extends ASection {
     }
 
     public void print() {
+        super.print();
         Set<Map.Entry<Integer, LinkedHashMap<Integer, String>>> lineEntries = this.words.entrySet();
         for (Map.Entry<Integer, LinkedHashMap<Integer, String>> lineEntry : lineEntries) {
             Integer lineY = lineEntry.getKey();
@@ -128,7 +128,8 @@ public class TextSection extends ASection {
             for (Map.Entry<Integer, String> entry : entries) {
                 Integer key = entry.getKey();
                 String value = entry.getValue();
-                System.out.print(value + "{" + String.format("% 4d", key) + "," + String.format("% 4d", lineY) + "} ");
+                //System.out.print(value + "{" + String.format("% 4d", key) + "," + String.format("% 4d", lineY) + "} ");
+                System.out.print(value);
             }
             System.out.println("");
         }

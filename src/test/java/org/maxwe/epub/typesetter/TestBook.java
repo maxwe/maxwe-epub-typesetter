@@ -40,9 +40,10 @@ public class TestBook {
         File[] files = new File(bookPath).listFiles();
         LinkedList<IPage> pages = new LinkedList<IPage>();
         long startTime = System.currentTimeMillis();
-        for (File file : files) {
-            org.maxwe.epub.parser.core.IChapter parserChapter = new org.maxwe.epub.parser.impl.Chapter(file.getAbsolutePath());
-            org.maxwe.epub.typesetter.core.IChapter chapter = new Chapter(parserChapter, 0, 0, 320, 480).typeset();
+        Configure configure = new Configure(0, 0, 0, 0);
+        for (int index =0;index<files.length;index++) {
+            org.maxwe.epub.parser.core.IChapter parserChapter = new org.maxwe.epub.parser.impl.Chapter(files[index].getAbsolutePath(),index);
+            org.maxwe.epub.typesetter.core.IChapter chapter = new Chapter(parserChapter,configure, 0, 0, 2560, 960).typeset();
             pages.addAll(chapter.getPages());
         }
 //        org.maxwe.epub.parser.core.IChapter parserChapter = new org.maxwe.epub.parser.impl.Chapter(pathFile);
