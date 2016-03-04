@@ -41,14 +41,14 @@ public class TestBook {
         LinkedList<IPage> pages = new LinkedList<IPage>();
         long startTime = System.currentTimeMillis();
         Configure configure = new Configure(0, 0, 0, 0);
-        for (int index =0;index<files.length;index++) {
-            org.maxwe.epub.parser.core.IChapter parserChapter = new org.maxwe.epub.parser.impl.Chapter(files[index].getAbsolutePath(),index);
-            org.maxwe.epub.typesetter.core.IChapter chapter = new Chapter(parserChapter,configure, 0, 0, 2560, 960).typeset();
-            pages.addAll(chapter.getPages());
-        }
-//        org.maxwe.epub.parser.core.IChapter parserChapter = new org.maxwe.epub.parser.impl.Chapter(pathFile);
-//        org.maxwe.epub.typesetter.core.IChapter chapter = new Chapter(parserChapter, 0, 0, 320, 480).typeset();
-//        pages.addAll(chapter.getPages());
+//        for (int index =0;index<files.length;index++) {
+//            org.maxwe.epub.parser.core.IChapter parserChapter = new org.maxwe.epub.parser.impl.Chapter(files[index].getAbsolutePath(),index);
+//            org.maxwe.epub.typesetter.core.IChapter chapter = new Chapter(parserChapter,configure, 0, 0, 2560, 960).typeset();
+//            pages.addAll(chapter.getPages());
+//        }
+        org.maxwe.epub.parser.core.IChapter parserChapter = new org.maxwe.epub.parser.impl.Chapter(pathFile);
+        org.maxwe.epub.typesetter.core.IChapter chapter = new Chapter(parserChapter,configure, 0, 0, 480, 960).typeset();
+        pages.addAll(chapter.getPages());
         System.out.println("排版耗时：" + (System.currentTimeMillis() - startTime));
         System.out.println(path + "初始化完成");
         int index = 0;

@@ -112,9 +112,9 @@ public class TextSection extends ASection {
             this.getChapter().setCurrentSectionIndexInParagraph(this.getChapter().getCurrentSectionIndexInParagraph() + 1);
         }
 
-        this.setEndX(this.getPage().getEndX());
+        this.setEndX(this.getPage().getCursorX());
         this.setEndY(this.getPage().getCursorY());
-
+        this.setEndOffsetInParagraph(this.getChapter().getCurrentSectionIndexInParagraph());
         return this;
     }
 

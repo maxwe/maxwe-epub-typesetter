@@ -44,6 +44,9 @@ public abstract class APage implements IPage {
         this.chapterId = this.chapter.getChapterId();
         this.chapterName = this.chapter.getChapterName();
         this.chapterIndex = this.chapter.getChapterIndex();
+        this.startParagraphIndexInChapter = this.chapter.getCurrentParagraphIndexInChapter();
+        this.startSectionIndexInParagraph = this.chapter.getCurrentSectionIndexInParagraph();
+        this.startMetaIndexInSection = this.chapter.getCurrentMetaIndexInSection();
     }
 
     public int getStartX() {
@@ -173,4 +176,11 @@ public abstract class APage implements IPage {
     }
 
     protected abstract APage typeset();
+
+    public void print() {
+        System.out.println("本页信息：章节名称= " + this.getChapterName()
+                + " ,偏移起始位置={" + this.getChapterIndex() + " ," + this.getStartParagraphIndexInChapter() + " ," + this.getStartSectionIndexInParagraph() +" ," + this.getStartMetaIndexInSection()
+                + "} ,偏移结束位置={" + this.getChapterIndex() + " ," + this.getEndParagraphIndexInChapter() + " ," + this.getEndSectionInParagraph() + " ," + this.getEndMetaIndexInSection()
+                + "},坐标起始点= {" + this.getStartX() + " ," + this.getStartY() + "} ,坐标结束点= {" + this.getEndX() + " ," + this.getEndY() + "}");
+    }
 }

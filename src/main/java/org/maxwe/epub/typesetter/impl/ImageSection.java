@@ -39,7 +39,7 @@ public class ImageSection extends ASection {
 
         this.getChapter().setCurrentSectionIndexInParagraph(this.getChapter().getCurrentSectionIndexInParagraph() + 1);
         this.getPage().setCursorY(this.getPage().getCursorY() + height);
-
+        this.setEndOffsetInParagraph(this.getChapter().getCurrentSectionIndexInParagraph());
         return this;
     }
 

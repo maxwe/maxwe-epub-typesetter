@@ -59,15 +59,14 @@ public class Paragraph extends AParagraph {
                 }
             }
         }
-        this.setEndX(this.getPage().getEndX());
-        this.setEndX(this.getPage().getCursorY());
-
+        this.setEndX(this.getPage().getCursorX());
+        this.setEndY(this.getPage().getCursorY());
+        this.setEndOffsetInChapter(this.getChapter().getCurrentParagraphIndexInChapter());
         return this;
     }
 
     public void print() {
-        System.out.println("本段信息：页面坐标起始点= {" + this.getStartX() + " ," + this.getStartY() + "} ,页面坐标结束点= {" + this.getEndX() + " ," + this.getEndY()
-                + "} ,段落偏移起始坐标= {" + this.getStartOffsetInChapter() + "} ,段落偏移结束坐标= {" + this.getEndOffsetInChapter() + "}");
+        super.print();
         for (ISection section : sections) {
             section.print();
         }

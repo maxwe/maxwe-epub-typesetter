@@ -40,14 +40,14 @@ public class Page extends APage {
                 break;
             }
         }
+        this.setEndParagraphIndexInChapter(this.getChapter().getCurrentParagraphIndexInChapter());
+        this.setEndSectionInParagraph(this.getChapter().getCurrentSectionIndexInParagraph());
+        this.setEndMetaIndexInSection(this.getChapter().getCurrentMetaIndexInSection());
         return this;
     }
 
     public void print() {
-        System.out.println("本页信息：章节名称= " + this.getChapterName()
-                + " ,四维坐标起始={" + this.getChapterIndex() + " ," + this.getStartParagraphIndexInChapter() + " ," + this.getStartSectionIndexInParagraph() +" ," + this.getStartMetaIndexInSection()
-                + "} ,四维坐标结束={" + this.getChapterIndex() + " ," + this.getEndParagraphIndexInChapter() + " ," + this.getEndSectionInParagraph() + " ," + this.getEndMetaIndexInSection()
-                + "},页面坐标起始点= {" + this.getStartX() + " ," + this.getStartY() + "} ,页面坐标结束点= {" + this.getEndX() + " ," + this.getEndY() + "}");
+        super.print();
         for (IParagraph paragraph:paragraphs){
             paragraph.print();
         }

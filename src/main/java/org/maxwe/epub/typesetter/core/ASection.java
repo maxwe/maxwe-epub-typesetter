@@ -23,11 +23,11 @@ public abstract class ASection implements ISection {
     protected ASection(AChapter chapter,APage page) {
         this.chapter = chapter;
         this.page = page;
-        this.startX = this.chapter.getStartX();
-        this.startY = this.chapter.getStartY();
-        this.endX = this.chapter.getEndX();
-        this.endY = this.chapter.getEndY();
-
+        this.startX = this.page.getCursorX();
+        this.startY = this.page.getCursorY();
+        this.endX = this.page.getEndX();
+        this.endY = this.page.getEndY();
+        this.startOffsetInParagraph = this.chapter.getCurrentSectionIndexInParagraph();
     }
 
     public int getStartX() {
@@ -99,7 +99,7 @@ public abstract class ASection implements ISection {
     protected abstract ASection typeset();
 
     public void print() {
-        System.out.println("本片段信息：页面坐标起始点= {" + this.getStartX() + " ," + this.getStartY() + "} ,页面坐标结束点= {" + this.getEndX() + " ," + this.getEndY()
-                + "} ,片段偏移起始坐标= {" + this.getStartOffsetInParagraph() + "} ,片段偏移结束坐标= {" + this.getEndOffsetInParagraph() + "}");
+        System.out.println("本片段信息：偏移起始位置= {" + this.getStartOffsetInParagraph() + "} ,偏移结束位置= {" + this.getEndOffsetInParagraph()
+                + "} ,本片段信息：坐标起始点= {" + this.getStartX() + " ," + this.getStartY() + "} ,页面坐标结束点= {" + this.getEndX() + " ," + this.getEndY() + "}");
     }
 }
