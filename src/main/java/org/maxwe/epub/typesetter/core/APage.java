@@ -178,9 +178,9 @@ public abstract class APage implements IPage {
     protected abstract APage typeset();
 
     public void print() {
-        System.out.println("本页信息：章节名称= " + this.getChapterName()
-                + " ,偏移起始位置={" + this.getChapterIndex() + " ," + this.getStartParagraphIndexInChapter() + " ," + this.getStartSectionIndexInParagraph() +" ," + this.getStartMetaIndexInSection()
-                + "} ,偏移结束位置={" + this.getChapterIndex() + " ," + this.getEndParagraphIndexInChapter() + " ," + this.getEndSectionInParagraph() + " ," + this.getEndMetaIndexInSection()
-                + "},坐标起始点= {" + this.getStartX() + " ," + this.getStartY() + "} ,坐标结束点= {" + this.getEndX() + " ," + this.getEndY() + "}");
+//        System.out.println("本页信息：章节名称= " + this.getChapterName()
+//                + " ,偏移起始位置={" + this.getChapterIndex() + " ," + this.getStartParagraphIndexInChapter() + " ," + this.getStartSectionIndexInParagraph() +" ," + this.getStartMetaIndexInSection()
+//                + "} ,偏移结束位置={" + this.getChapterIndex() + " ," + this.getEndParagraphIndexInChapter() + " ," + this.getEndSectionInParagraph() + " ," + this.getEndMetaIndexInSection()
+//                + "},坐标起始点= {" + this.getStartX() + " ," + this.getStartY() + "} ,坐标结束点= {" + this.getEndX() + " ," + this.getEndY() + "}");
     }
 }

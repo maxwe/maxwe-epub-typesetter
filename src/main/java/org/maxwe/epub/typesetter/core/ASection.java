@@ -99,7 +99,7 @@ public abstract class ASection implements ISection {
     protected abstract ASection typeset();
 
     public void print() {
-        System.out.println("本片段信息：偏移起始位置= {" + this.getStartOffsetInParagraph() + "} ,偏移结束位置= {" + this.getEndOffsetInParagraph()
-                + "} ,本片段信息：坐标起始点= {" + this.getStartX() + " ," + this.getStartY() + "} ,页面坐标结束点= {" + this.getEndX() + " ," + this.getEndY() + "}");
+//        System.out.println("本片段信息：偏移起始位置= {" + this.getStartOffsetInParagraph() + "} ,偏移结束位置= {" + this.getEndOffsetInParagraph()
+//                + "} ,本片段信息：坐标起始点= {" + this.getStartX() + " ," + this.getStartY() + "} ,页面坐标结束点= {" + this.getEndX() + " ," + this.getEndY() + "}");
     }
 }

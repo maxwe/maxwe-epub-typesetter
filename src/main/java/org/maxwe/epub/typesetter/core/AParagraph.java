@@ -99,8 +99,8 @@ public abstract class AParagraph implements IParagraph{
     protected abstract AParagraph typeset();
 
     public void print() {
-        System.out.println("本段信息：偏移起始位置= {" + this.getStartOffsetInChapter() + "} ,偏移结束位置= {" + this.getEndOffsetInChapter()
-                + "} ,坐标起始点= {" + this.getStartX() + " ," + this.getStartY() + "} ,坐标结束点= {" + this.getEndX() + " ," + this.getEndY()+ "}");
+//        System.out.println("本段信息：偏移起始位置= {" + this.getStartOffsetInChapter() + "} ,偏移结束位置= {" + this.getEndOffsetInChapter()
+//                + "} ,坐标起始点= {" + this.getStartX() + " ," + this.getStartY() + "} ,坐标结束点= {" + this.getEndX() + " ," + this.getEndY()+ "}");
     }
 
 
