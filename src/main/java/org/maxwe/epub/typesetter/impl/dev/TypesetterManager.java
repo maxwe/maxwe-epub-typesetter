@@ -14,11 +14,17 @@ import java.util.LinkedList;
  * Created by Pengwei Ding on 2016-03-07 15:07.
  * Email: www.dingpengwei@foxmail.com www.dingpegnwei@gmail.com
  * Description: 异步加载页码
+ * TODO
+ * 添加清理多余缓存页面
+ * 添加进度记录与重现
+ * 添加异步累计与通知方式
+ * 调整缓冲页面数量
+ * 添加重拍版
+ * 可配置屏幕信息
  */
 public class TypesetterManager {
 
-    private final int STOCK_CLIQUE = 25;
-    private PageScrolledStatus previousStatus = PageScrolledStatus.next;
+    private final int STOCK_CLIQUE = 500;
     private LinkedList<IPage> previousPageQueue = new LinkedList();
     private IPage currentPage;
     private LinkedList<IPage> nextPageQueue = new LinkedList();
@@ -51,32 +57,17 @@ public class TypesetterManager {
     public LinkedList<IPage> getPage(PageScrolledStatus flag) {
         LinkedList<IPage> pages = new LinkedList();
         if (flag == PageScrolledStatus.current) {
-            pages.add(0,this.previousPageQueue.size() < 1 ? null:this.previousPageQueue.getLast());
-            pages.add(1,this.currentPage);
-            pages.add(2,this.nextPageQueue.size() <1 ? null:this.nextPageQueue.getFirst());
+            pages.add(0, this.previousPageQueue.size() < 1 ? null : this.previousPageQueue.getLast());
+            pages.add(1, this.currentPage);
+            pages.add(2, this.nextPageQueue.size() < 1 ? null : this.nextPageQueue.getFirst());
         } else if (flag == PageScrolledStatus.previous) {
             this.nextPageQueue.addFirst(this.currentPage);
-            this.currentPage = this.previousPageQueue.pollLast();
-            pages.add(this.previousPageQueue.getLast());
-//            if (previousStatus == PageScrolledStatus.next) {
-//
-//            } else if (previousStatus == PageScrolledStatus.previous) {
-//                this.nextPageQueue.addFirst(this.currentPage);
-//                this.currentPage = this.previousPageQueue.pollLast();
-//                pages.add(this.previousPageQueue.size() < 1 ? null:this.previousPageQueue.getLast());
-//            }
-            this.previousStatus = flag;
+            this.currentPage = this.previousPageQueue.size() < 1 ? null : this.previousPageQueue.pollLast();
+            pages.add(this.previousPageQueue.size() < 1 ? null : this.previousPageQueue.getLast());
         } else if (flag == PageScrolledStatus.next) {
             this.previousPageQueue.addLast(this.currentPage);
-            this.currentPage = this.nextPageQueue.pollFirst();
-            pages.add(this.nextPageQueue.size() < 1 ? null:this.nextPageQueue.getFirst());
-//            if (previousStatus == PageScrolledStatus.next) {
-//            } else if (previousStatus == PageScrolledStatus.previous) {
-//                this.nextPageQueue.addFirst(this.currentPage);
-//                this.currentPage = this.previousPageQueue.pollLast();
-//                pages.add(this.previousPageQueue.getLast());
-//            }
-            this.previousStatus = flag;
+            this.currentPage = this.nextPageQueue.size() < 1 ? null : this.nextPageQueue.pollFirst();
+            pages.add(this.nextPageQueue.size() < 1 ? null : this.nextPageQueue.getFirst());
         }
 
         this.buildPages();
@@ -89,7 +80,7 @@ public class TypesetterManager {
                 synchronized (previousPageQueue) {
                     if (previousPageQueue.size() <= STOCK_CLIQUE) {
                         IPage first = previousPageQueue.size() < 1 ? null : previousPageQueue.getFirst();
-                        if (first != null){
+                        if (first != null) {
                             int chapterIndex = first.getChapterIndex() - 1;
                             String path = indexToPath.get(chapterIndex);
                             if (path != null) {
@@ -99,6 +90,11 @@ public class TypesetterManager {
                                 }
                             }
                         }
+                    } else {
+                        /**
+                         * TODO
+                         * 删除多余的
+                         */
                     }
                 }
             }
@@ -109,16 +105,21 @@ public class TypesetterManager {
                 synchronized (nextPageQueue) {
                     if (nextPageQueue.size() <= STOCK_CLIQUE) {
                         IPage last = nextPageQueue.size() < 1 ? null : nextPageQueue.getLast();
-                        if (last == null){
+                        if (last == null) {
                             last = currentPage;
                         }
-                        if (last != null){
+                        if (last != null) {
                             int chapterIndex = last.getChapterIndex() + 1;
                             String path = indexToPath.get(chapterIndex);
                             if (path != null) {
                                 nextPageQueue.addAll(buildPages(path, chapterIndex));
                             }
                         }
+                    } else {
+                        /**
+                         * TODO
+                         * 删除多余的
+                         */
                     }
                 }
             }
