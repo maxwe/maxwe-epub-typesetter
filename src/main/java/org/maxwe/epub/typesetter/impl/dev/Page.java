@@ -1,10 +1,6 @@
-package org.maxwe.epub.typesetter.impl;
+package org.maxwe.epub.typesetter.impl.dev;
 
-import org.maxwe.epub.typesetter.Configure;
-import org.maxwe.epub.typesetter.core.AChapter;
-import org.maxwe.epub.typesetter.core.APage;
-import org.maxwe.epub.typesetter.core.AParagraph;
-import org.maxwe.epub.typesetter.core.IParagraph;
+import org.maxwe.epub.typesetter.core.*;
 
 import java.util.LinkedList;
 
@@ -21,7 +17,7 @@ import java.util.LinkedList;
 public class Page extends APage {
 
     private LinkedList<IParagraph> paragraphs = new LinkedList<IParagraph>();
-    protected Page(AChapter chapter,Configure configure) {
+    protected Page(AChapter chapter,IConfigure configure) {
         super(chapter,configure);
     }
 

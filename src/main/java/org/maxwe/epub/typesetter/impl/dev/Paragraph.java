@@ -1,4 +1,4 @@
-package org.maxwe.epub.typesetter.impl;
+package org.maxwe.epub.typesetter.impl.dev;
 
 import org.maxwe.epub.parser.core.IParagraph;
 import org.maxwe.epub.parser.impl.Audio;

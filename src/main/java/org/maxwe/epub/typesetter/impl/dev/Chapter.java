@@ -1,8 +1,8 @@
-package org.maxwe.epub.typesetter.impl;
+package org.maxwe.epub.typesetter.impl.dev;
 
 import org.maxwe.epub.parser.core.IChapter;
-import org.maxwe.epub.typesetter.Configure;
 import org.maxwe.epub.typesetter.core.AChapter;
+import org.maxwe.epub.typesetter.core.IConfigure;
 import org.maxwe.epub.typesetter.core.IPage;
 
 import java.util.LinkedList;
@@ -30,7 +30,7 @@ public class Chapter extends AChapter {
 
     private LinkedList<IPage> pages = new LinkedList<IPage>();
 
-    public Chapter(IChapter chapter,Configure configure, int startX, int startY, int endX, int endY) {
+    public Chapter(IChapter chapter,IConfigure configure, int startX, int startY, int endX, int endY) {
         super(chapter, configure,startX, startY, endX, endY);
     }
 

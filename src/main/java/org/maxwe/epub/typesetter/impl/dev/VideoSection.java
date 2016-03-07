@@ -1,4 +1,4 @@
-package org.maxwe.epub.typesetter.impl;
+package org.maxwe.epub.typesetter.impl.dev;
 
 import org.maxwe.epub.typesetter.core.AChapter;
 import org.maxwe.epub.typesetter.core.APage;
@@ -8,15 +8,13 @@ import org.maxwe.epub.typesetter.core.IMeta;
 import java.util.LinkedList;
 
 /**
- * Created by Pengwei Ding on 2016-01-02 09:44.
+ * Created by Pengwei Ding on 2016-01-03 09:14.
  * Email: www.dingpengwei@foxmail.com www.dingpegnwei@gmail.com
  * Description: @TODO
  */
-public class ImageSection extends ASection {
-
+public class VideoSection extends ASection {
     private LinkedList<IMeta> metas = new LinkedList<IMeta>();
-
-    protected ImageSection(AChapter chapter, APage page) {
+    protected VideoSection(AChapter chapter, APage page) {
         super(chapter, page);
     }
 
@@ -29,7 +27,7 @@ public class ImageSection extends ASection {
     protected ASection typeset() {
         int paragraphOffset = this.getChapter().getCurrentParagraphIndexInChapter();
         int sectionOffset = this.getChapter().getCurrentSectionIndexInParagraph();
-        org.maxwe.epub.parser.impl.Image section = (org.maxwe.epub.parser.impl.Image) this.getChapter().getParsedChapter().getParagraph(paragraphOffset).getSection(sectionOffset);
+        org.maxwe.epub.parser.impl.Video section = (org.maxwe.epub.parser.impl.Video) this.getChapter().getParsedChapter().getParagraph(paragraphOffset).getSection(sectionOffset);
 
         int width = this.getScreenWidth();
         int height = 300;
@@ -47,11 +45,11 @@ public class ImageSection extends ASection {
         super.print();
         for (int i = 0; i < 10; i++) {
             if (i==5){
-                System.out.println("图片区域");
-                System.out.print(this.metas.get(0).getValue());
+                System.out.println("视频区域");
+                System.out.print(this.getMetas().get(0).getValue());
             }else {
                 for (int j=0;j<25;j++){
-                    System.out.print("#");
+                    System.out.print("@");
                 }
             }
             System.out.println();

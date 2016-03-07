@@ -3,7 +3,8 @@ package org.maxwe.epub.typesetter;
 import junit.framework.TestCase;
 import org.maxwe.epub.typesetter.core.IChapter;
 import org.maxwe.epub.typesetter.core.IPage;
-import org.maxwe.epub.typesetter.impl.Chapter;
+import org.maxwe.epub.typesetter.impl.dev.Chapter;
+import org.maxwe.epub.typesetter.impl.dev.Configure;
 
 import java.util.LinkedList;
 

@@ -1,4 +1,4 @@
-package org.maxwe.epub.typesetter.impl;
+package org.maxwe.epub.typesetter.impl.dev;
 
 import org.maxwe.epub.parser.impl.Text;
 import org.maxwe.epub.typesetter.core.AChapter;

@@ -1,7 +1,8 @@
 package org.maxwe.epub.typesetter;
 
 import org.maxwe.epub.typesetter.core.IPage;
-import org.maxwe.epub.typesetter.impl.Chapter;
+import org.maxwe.epub.typesetter.impl.dev.Configure;
+import org.maxwe.epub.typesetter.impl.dev.TypesetterManager;
 
 import java.io.File;
 import java.util.LinkedList;
@@ -13,22 +14,21 @@ import java.util.Scanner;
  * Description: @TODO
  */
 public class TestBook {
-    private static final String path = TestBook.class.getResource("/").getPath() + "sample/OEBPS/Text/";
-    private static final String pathFile = TestBook.class.getResource("/").getPath() + "sample/OEBPS/Text/ds00216105.xhtml";
+    private static final String pathDir = TestBook.class.getResource("/").getPath() + "sample/";
 
     public static void main(String[] args) throws Exception {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("默认阅读图书的路径：" + path + ",确定请输入(Y),退出请输入(N),更换图书请输入路径！");
+        System.out.println("默认阅读图书的路径：" + pathDir + ",确定请输入(Y),退出请输入(N),更换图书请输入路径！");
         Configure configure = new Configure(0, 0, 0, 0);
         while (true) {
             String next = scanner.nextLine();
             if ("Y".equalsIgnoreCase(next)) {
-                openBook(path, configure);
+                openBook(pathDir, configure);
             } else if ("N".equalsIgnoreCase(next)) {
-                System.out.println("待机状态...,输入(Y)阅读默认图书：" + path + ",更换图书请输入路径！");
+                System.out.println("待机状态...,输入(Y)阅读默认图书：" + pathDir + ",更换图书请输入路径！");
             } else {
                 if (next == null || !new File(next).exists() || new File(next).isFile() || new File(next).listFiles().length == 0) {
-                    System.out.println("输入错误,输入(Y)阅读默认图书：" + path + ",更换图书请输入路径！");
+                    System.out.println("输入错误,输入(Y)阅读默认图书：" + pathDir + ",更换图书请输入路径！");
                 } else {
                     openBook(next, configure);
                 }
@@ -36,63 +36,50 @@ public class TestBook {
         }
     }
 
-    private static void openBook(String bookPath, Configure configure) throws Exception {
-        Scanner scanner = new Scanner(System.in);
-        File[] files = new File(bookPath).listFiles();
-        LinkedList<IPage> pages = new LinkedList<IPage>();
-        long startTime = System.currentTimeMillis();
-
-        for (int index = 0; index < files.length; index++) {
-            org.maxwe.epub.parser.core.IChapter parserChapter = new org.maxwe.epub.parser.impl.Chapter(files[index].getAbsolutePath(), index);
-            org.maxwe.epub.typesetter.core.IChapter chapter = new Chapter(parserChapter, configure, 0, 0, 2560, 960).typeset();
-            pages.addAll(chapter.getPages());
-        }
-//        org.maxwe.epub.parser.core.IChapter parserChapter = new org.maxwe.epub.parser.impl.Chapter(pathFile);
-//        org.maxwe.epub.typesetter.core.IChapter chapter = new Chapter(parserChapter,configure, 0, 0, 480, 960).typeset();
-//        pages.addAll(chapter.getPages());
-        System.out.println("排版耗时：" + (System.currentTimeMillis() - startTime));
-        System.out.println(path + "初始化完成");
-        int index;
-        for (index = 0; index < pages.size(); index++) {
-            IPage iPage = pages.get(index);
-            if (configure.getChapterIndex() == iPage.getChapterIndex() &&
-                    configure.getParagraphIndex() == iPage.getStartParagraphIndexInChapter() &&
-                    configure.getSectionIndex() == iPage.getStartSectionIndexInParagraph() &&
-                    configure.getMateIndex() == iPage.getStartMetaIndexInSection()) {
-                break;
-            }
+    private static void openBook(String bookDir, Configure configure) throws Exception {
+        TypesetterManager typesetterManager = new TypesetterManager(bookDir,configure);
+        LinkedList<IPage> pages = typesetterManager.getPage(TypesetterManager.PageScrolledStatus.current);
+        System.out.println("==============前一页===============");
+        if (pages.get(0) == null){
+            System.out.println("----------------马上到首页了------------------");
+        }else{
+            System.out.println("===============已经绘制完成内容如下===============");
+            pages.get(0).print();
         }
 
-        pages.get(index).print();
+        System.out.println("==============当前页===============");
+        pages.get(1).print();
+
+        System.out.println("==============后一页===============");
+        if (pages.get(2) == null){
+            System.out.println("----------------马上到尾页了------------------");
+        }else{
+            System.out.println("===============已经绘制完成内容如下===============");
+            pages.get(2).print();
+        }
+
         System.out.println("上一页(P),下一页(N),退出(Q)");
+
+        Scanner scanner = new Scanner(System.in);
         while (true) {
             String next = scanner.nextLine();
+
             if ("P".equalsIgnoreCase(next)) {
-                index--;
-                if (index < 0) {
-                    index = 0;
-                }
-                IPage iPage = pages.get(index);
-                iPage.print();
-                configure.setChapterIndex(iPage.getChapterIndex());
-                configure.setParagraphIndex(iPage.getStartParagraphIndexInChapter());
-                configure.setSectionIndex(iPage.getStartSectionIndexInParagraph());
-                configure.setMateIndex(iPage.getStartMetaIndexInSection());
+                pages = typesetterManager.getPage(TypesetterManager.PageScrolledStatus.previous);
+                System.out.println("---------------当前查看内容如下----------------");
+                typesetterManager.getCurrentPage().print();
+                System.out.println("===============已经绘制完成内容如下===============");
+                pages.get(0).print();
                 System.out.println("上一页(P),下一页(N),退出(Q)");
             } else if ("N".equalsIgnoreCase(next)) {
-                index++;
-                if (index >= pages.size()) {
-                    index = pages.size() - 1;
-                }
-                IPage iPage = pages.get(index);
-                iPage.print();
-                configure.setChapterIndex(iPage.getChapterIndex());
-                configure.setParagraphIndex(iPage.getStartParagraphIndexInChapter());
-                configure.setSectionIndex(iPage.getStartSectionIndexInParagraph());
-                configure.setMateIndex(iPage.getStartMetaIndexInSection());
+                pages = typesetterManager.getPage(TypesetterManager.PageScrolledStatus.next);
+                System.out.println("---------------当前查看内容如下----------------");
+                typesetterManager.getCurrentPage().print();
+                System.out.println("===============已经绘制完成内容如下===============");
+                pages.get(0).print();
                 System.out.println("上一页(P),下一页(N),退出(Q)");
             } else if ("Q".equalsIgnoreCase(next)) {
-                System.out.println("待机状态...,输入(Y)阅读默认图书：" + path + ",更换图书请输入路径！");
+                System.out.println("待机状态...,输入(Y)阅读默认图书：" + pathDir + ",更换图书请输入路径！");
                 break;
             } else {
                 System.out.println("输入错误");

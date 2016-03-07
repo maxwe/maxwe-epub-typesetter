@@ -1,7 +1,5 @@
 package org.maxwe.epub.typesetter.core;
 
-import org.maxwe.epub.typesetter.Configure;
-
 import java.util.LinkedList;
 
 /**
@@ -33,8 +31,8 @@ public abstract class APage implements IPage {
     private int cursorY;
 
     private AChapter chapter;
-    private Configure configure;
-    protected APage(AChapter chapter,Configure configure){
+    private IConfigure configure;
+    protected APage(AChapter chapter,IConfigure configure){
         this.chapter = chapter;
         this.configure = configure;
         this.cursorX = this.startX = this.chapter.getStartX();
@@ -171,7 +169,7 @@ public abstract class APage implements IPage {
 
     public abstract LinkedList<IParagraph> getParagraphs();
 
-    public Configure getConfigure() {
+    public IConfigure getConfigure() {
         return configure;
     }
 
