@@ -16,15 +16,10 @@ import java.util.LinkedList;
 public class TestSingleChapter extends TestCase {
     private final String path = TestSingleChapter.class.getResource("/").getPath() + "sample/OEBPS/Text/ds00216103_test.xhtml";
 
-    private final int startX = 0;
-    private final int startY = 0;
-    private final int endX = 320;
-    private final int endY = 480;
-
     public void test() throws Exception{
         Configure configure = new Configure(0, 0, 0, 0);
         org.maxwe.epub.parser.core.IChapter parserChapter = new org.maxwe.epub.parser.impl.Chapter(path);
-        org.maxwe.epub.typesetter.core.IChapter chapter = new Chapter(parserChapter, configure,startX, startY, endX, endY).setChapterTypesetListener(new Chapter.ChapterTypesetListener() {
+        org.maxwe.epub.typesetter.core.IChapter chapter = new Chapter(parserChapter, configure).setChapterTypesetListener(new Chapter.ChapterTypesetListener() {
             public void onChapterTypesetStart(IChapter chapter) {
                 System.out.println("章节：《" + chapter.getChapterName() + "》排版开始");
             }

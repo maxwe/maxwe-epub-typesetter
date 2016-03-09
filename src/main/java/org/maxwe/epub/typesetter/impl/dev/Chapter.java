@@ -30,8 +30,8 @@ public class Chapter extends AChapter {
 
     private LinkedList<IPage> pages = new LinkedList<IPage>();
 
-    public Chapter(IChapter chapter,IConfigure configure, int startX, int startY, int endX, int endY) {
-        super(chapter, configure,startX, startY, endX, endY);
+    public Chapter(IChapter chapter,IConfigure configure) {
+        super(chapter, configure,configure.getStartX(), configure.getStartY(), configure.getEndX(), configure.getEndY());
     }
 
 

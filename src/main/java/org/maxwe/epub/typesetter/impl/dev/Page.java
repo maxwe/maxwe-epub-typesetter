@@ -42,6 +42,19 @@ public class Page extends APage {
         return this;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj != null &&  obj instanceof IPage
+                && this.getChapterIndex() == ((IPage)obj).getChapterIndex()
+                && this.getStartParagraphIndexInChapter() == ((IPage)obj).getStartParagraphIndexInChapter()
+                && this.getStartSectionIndexInParagraph() == ((IPage)obj).getStartSectionIndexInParagraph()
+                && this.getStartMetaIndexInSection() == ((IPage)obj).getStartMetaIndexInSection()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     public void print() {
         super.print();
         for (IParagraph paragraph:paragraphs){

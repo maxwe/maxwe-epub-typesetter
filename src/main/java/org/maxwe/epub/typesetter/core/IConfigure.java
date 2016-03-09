@@ -7,6 +7,14 @@ package org.maxwe.epub.typesetter.core;
  */
 public interface IConfigure {
 
+    int getStartX();
+
+    int getStartY();
+
+    int getEndX();
+
+    int getEndY();
+
     String getFontStyle();
 
     int getFontSize();
